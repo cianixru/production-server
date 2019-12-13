@@ -19,14 +19,10 @@ export class UserAuthDto extends AbstractDto {
     @ApiPropertyOptional()
     password: string;
 
-    @ApiProperty()
-    userId: number;
-
-    constructor(userAuth: UserAuthEntity, user: UserDto) {
+    constructor(userAuth: UserAuthEntity) {
         super(userAuth);
         this.role = userAuth.role;
         this.login = userAuth.login;
         this.password = userAuth.password;
-        this.userId = user.id;
     }
 }

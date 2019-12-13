@@ -15,34 +15,41 @@ import { CustomerEntity } from '../../customer/models/customer.entity';
 @Entity({ name: 'production_tasks' })
 export class ProductionTaskEntity extends AbstractEntity<ProductionTaskDto> {
     @Column()
-    name: string;
+    public name: string;
 
     @Column()
-    quantity: number;
+    public quantity: number;
 
     @Column({ type: 'time', nullable: false })
-    duration: string;
+    public duration: string;
 
     @CreateDateColumn()
-    createdAt: string;
+    public createdAt: string;
 
-    @ManyToOne(type => CustomerEntity, customer => customer.productionTask)
-    @JoinColumn({ name: 'customer_id' })
-    customer: CustomerEntity;
+    @ManyToOne(
+        () => CustomerEntity,
+        (customer: CustomerEntity) => customer.productionTask,
+    )
+    public customer: CustomerEntity;
 
-    @ManyToOne(type => UserEntity, user => user.productionTask)
-    @JoinColumn({ name: 'operator_id' })
-    user: UserEntity;
+    @ManyToOne(
+        () => UserEntity,
+        (user: UserEntity) => user.productionTask,
+    )
+    public user: UserEntity;
 
-    @ManyToOne(type => UserEntity, user => user.productionTask)
-    @JoinColumn({ name: 'master_id' })
-    master: UserEntity;
+    @ManyToOne(
+        () => UserEntity,
+        (user: UserEntity) => user.productionTask,
+    )
+    public master: UserEntity;
 
     @OneToMany(
-        type => ProductionMachineHistoryEntity,
-        productionMachineHistory => productionMachineHistory.productionTask,
+        () => ProductionMachineHistoryEntity,
+        (productionMachineHistory: ProductionMachineHistoryEntity) =>
+            productionMachineHistory.user,
     )
-    productionMachineHistory: ProductionMachineHistoryEntity[];
+    public productionMachineHistory: ProductionMachineHistoryEntity[];
 
     dtoClass = ProductionTaskDto;
 }

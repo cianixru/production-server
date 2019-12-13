@@ -19,14 +19,10 @@ export class UserSalaryDto extends AbstractDto {
     @ApiProperty({ format: 'date' })
     updatedAt: string;
 
-    @ApiProperty()
-    userId: number;
-
-    constructor(userSalary: UserSalaryEntity, user: UserDto) {
+    constructor(userSalary: UserSalaryEntity) {
         super(userSalary);
         this.salary = userSalary.salary;
         this.contractType = userSalary.contractType;
         this.updatedAt = userSalary.updatedAt;
-        this.userId = user.id;
     }
 }

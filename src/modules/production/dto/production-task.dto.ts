@@ -3,10 +3,8 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { AbstractDto } from '../../../common/dto/abstract.dto';
 import { ProductionTaskEntity } from '../models/production-task.entity';
-import { CustomerDto } from 'modules/customer/dto/customer.dto';
-import { UserDto } from 'modules/user/dto/user.dto';
-import { UserEntity } from 'modules/user/models/user.entity';
-import { CustomerEntity } from 'modules/customer/models/customer.entity';
+import { CustomerDto } from '../../customer/dto/customer.dto';
+import { UserDto } from '../../user/dto/user.dto';
 
 export class ProductionTaskDto extends AbstractDto {
     @ApiProperty()
@@ -21,26 +19,23 @@ export class ProductionTaskDto extends AbstractDto {
     @ApiProperty()
     createdAt: string;
 
-    @ApiProperty()
-    customerId: number;
+    @ApiProperty({ type: CustomerDto })
+    customer: CustomerDto;
 
-    @ApiProperty()
-    userId: number;
+    @ApiProperty({ type: UserDto })
+    user: UserDto;
 
-    @ApiProperty()
-    masterId: number;
+    @ApiProperty({ type: UserDto })
+    master: UserDto;
 
-    constructor(
-        productionTask: ProductionTaskEntity,
-        relations: { customer: CustomerDto; user: UserDto },
-    ) {
+    constructor(productionTask: ProductionTaskEntity) {
         super(productionTask);
         this.name = productionTask.name;
         this.quantity = productionTask.quantity;
         this.duration = productionTask.duration;
         this.createdAt = productionTask.createdAt;
-        this.customerId = relations.customer.id;
-        this.userId = relations.user.id;
-        this.masterId = relations.user.id;
+        this.customer = productionTask.customer.toDto();
+        this.user = productionTask.user.toDto();
+        this.master = productionTask.master.toDto();
     }
 }

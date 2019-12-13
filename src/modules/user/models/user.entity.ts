@@ -1,4 +1,11 @@
-import { Entity, Column, CreateDateColumn, OneToOne, OneToMany } from 'typeorm';
+import {
+    Entity,
+    Column,
+    CreateDateColumn,
+    OneToOne,
+    OneToMany,
+    JoinColumn,
+} from 'typeorm';
 
 import { AbstractEntity } from '../../../common/models/abstract.entity';
 import { UserDto } from '../dto/user.dto';
@@ -11,67 +18,62 @@ import { IUser } from '../interfaces/user.interface';
 @Entity({ name: 'users' })
 export class UserEntity extends AbstractEntity<UserDto> {
     @Column()
-    firstName: string;
+    public firstName: string;
 
     @Column()
-    lastName: string;
+    public lastName: string;
 
     @Column({ unique: true })
-    email: string;
+    public email: string;
 
     @Column()
-    phone: string;
+    public phone: string;
 
     @Column()
-    street: string;
+    public street: string;
 
     @Column()
-    city: string;
+    public city: string;
 
     @Column()
-    state: string;
+    public state: string;
 
     @Column()
-    zip: string;
+    public zip: string;
 
     @CreateDateColumn({ type: 'date' })
-    createdAt: string;
+    public createdAt: string;
 
     @Column('timestamp with time zone', { nullable: true })
-    lastLogin: string;
+    public lastLogin: string;
 
     @Column('timestamp with time zone', { nullable: true })
-    lastLogout: string;
+    public lastLogout: string;
 
     @OneToOne(
-        type => UserAuthEntity,
-        userAuth => userAuth.user,
-        {
-            nullable: false,
-        },
+        () => UserAuthEntity,
+        (userAuth: UserAuthEntity) => userAuth.user,
     )
-    userAuth: UserAuthEntity;
+    public userAuth: UserAuthEntity;
 
     @OneToOne(
-        type => UserSalaryEntity,
-        userSalary => userSalary.user,
-        {
-            nullable: false,
-        },
+        () => UserSalaryEntity,
+        (userSalary: UserSalaryEntity) => userSalary.user,
     )
-    userSalary: UserSalaryEntity;
+    public userSalary: UserSalaryEntity;
 
     @OneToMany(
-        type => ProductionMachineHistoryEntity,
-        productionMachineHistory => productionMachineHistory.user,
+        () => ProductionMachineHistoryEntity,
+        (productionMachineHistory: ProductionMachineHistoryEntity) =>
+            productionMachineHistory.user,
     )
-    productionMachineHistory: ProductionMachineHistoryEntity[];
+    public productionMachineHistory: ProductionMachineHistoryEntity[];
 
     @OneToMany(
-        type => ProductionTaskEntity,
-        productionTask => [productionTask.user, productionTask.master],
+        () => ProductionTaskEntity,
+        (productionTask: ProductionTaskEntity) => productionTask.user,
     )
-    productionTask: ProductionTaskEntity[];
+    public productionTask: ProductionTaskEntity[];
 
     dtoClass = UserDto;
 }

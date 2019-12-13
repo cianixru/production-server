@@ -10,29 +10,27 @@ export class ProductionMachineHistoryEntity extends AbstractEntity<
     ProductionMachineHistoryDto
 > {
     @CreateDateColumn()
-    usedAt: string;
+    public usedAt: string;
 
     @ManyToOne(
-        type => ProductionTaskEntity,
-        productionTask => productionTask.productionMachineHistory,
-        { nullable: false },
+        () => ProductionTaskEntity,
+        (productionTask: ProductionTaskEntity) =>
+            productionTask.productionMachineHistory,
     )
-    @JoinColumn({ name: 'task_id' })
-    productionTask: ProductionTaskEntity;
+    public productionTask: ProductionTaskEntity;
 
     @ManyToOne(
-        type => ProductionMachineEntity,
-        productionMachine => productionMachine.productionMachineHistory,
-        { nullable: false },
+        () => ProductionMachineEntity,
+        (productionMachine: ProductionMachineEntity) =>
+            productionMachine.productionMachineHistory,
     )
-    @JoinColumn({ name: 'machine_id' })
-    productionMachine: ProductionMachineEntity;
+    public productionMachine: ProductionMachineEntity;
 
-    @ManyToOne(type => UserEntity, user => user.productionMachineHistory, {
-        nullable: false,
-    })
-    @JoinColumn({ name: 'operator_id' })
-    user: UserEntity;
+    @ManyToOne(
+        () => UserEntity,
+        (user: UserEntity) => user.productionMachineHistory,
+    )
+    public user: UserEntity;
 
     dtoClass = ProductionMachineHistoryDto;
 }

@@ -14,25 +14,29 @@ import { IUserSalary } from '../interfaces/user-salary.interface';
 @Entity({ name: 'users_salary' })
 export class UserSalaryEntity extends AbstractEntity<UserSalaryDto> {
     @Column('decimal', { precision: 13, scale: 2, default: 0 })
-    salary: number;
+    public salary: number;
 
     @Column({
         type: 'enum',
         enum: ContractType,
         default: ContractType.FullTime,
     })
-    contractType: ContractType;
+    public contractType: ContractType;
 
     @UpdateDateColumn({ type: 'date' })
-    updatedAt: string;
+    public updatedAt: string;
 
     @OneToOne(
-        type => UserEntity,
-        user => user.userSalary,
-        { nullable: false },
+        () => UserEntity,
+        (user: UserEntity) => user.userSalary,
+        {
+            cascade: true,
+            eager: true,
+            nullable: false,
+        },
     )
-    @JoinColumn({ name: 'user_id' })
-    user: UserEntity;
+    @JoinColumn()
+    public user: UserEntity;
 
     dtoClass = UserSalaryDto;
 }

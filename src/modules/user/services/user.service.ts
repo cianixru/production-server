@@ -12,6 +12,8 @@ import { UserAuthRepository } from '../repositories/user-auth.repository';
 import { UserSalaryRepository } from '../repositories/user-salary.repository';
 import { UserDto } from '../dto/user.dto';
 import { format } from 'date-fns';
+import { UserAuthEntity } from '../models/user-auth.entity';
+import { UserSalaryEntity } from '../models/user-salary.entity';
 
 @Injectable()
 export class UserService {
@@ -51,7 +53,9 @@ export class UserService {
         return queryBuilder.getOne();
     }
 
-    async createUser(userRegisterDto: UserRegisterDto): Promise<UserDto> {
+    async createUser(
+        userRegisterDto: UserRegisterDto,
+    ): Promise<[UserEntity, UserAuthEntity, UserSalaryEntity]> {
         const user = this.userRepository.create(userRegisterDto);
         await this.userRepository.save(user);
 
@@ -67,15 +71,10 @@ export class UserService {
             this.userSalaryRepository.save(userSalary),
         ]);
 
-        user.userAuth = userAuth.toDto();
-        user.userSalary = userSalary.toDto();
-
-        return user.toDto();
+        return [user, userAuth, userSalary];
     }
 
-    async getUsers(
-        pageOptionsDto: UsersPageOptionsDto,
-    ): Promise<UsersPageDto | any> {
+    async getUsers(pageOptionsDto: UsersPageOptionsDto): Promise<UsersPageDto> {
         const queryBuilder = this.userRepository.createQueryBuilder('user');
         const [users, usersCount] = await queryBuilder
             .leftJoinAndSelect('user.userAuth', 'userAuth')
@@ -83,8 +82,6 @@ export class UserService {
             .skip(pageOptionsDto.skip)
             .take(pageOptionsDto.take)
             .getManyAndCount();
-
-        console.log(users.toDtos());
 
         const pageMetaDto = new PageMetaDto({
             pageOptionsDto,

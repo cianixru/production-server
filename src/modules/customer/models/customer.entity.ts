@@ -7,37 +7,37 @@ import { ProductionTaskEntity } from '../../production/models/production-task.en
 @Entity({ name: 'customers' })
 export class CustomerEntity extends AbstractEntity<CustomerDto> {
     @Column()
-    name: string;
+    public name: string;
 
     @Column({ unique: true })
-    email: string;
+    public email: string;
 
     @Column()
-    phone: string;
+    public phone: string;
 
     @Column()
-    street: string;
+    public street: string;
 
     @Column()
-    city: string;
+    public city: string;
 
     @Column()
-    state: string;
+    public state: string;
 
     @Column()
-    zip: string;
+    public zip: string;
 
     @Column()
-    tax: string;
+    public tax: string;
 
     @CreateDateColumn({ type: 'date' })
-    createdAt: string;
+    public createdAt: string;
 
     @OneToMany(
-        type => ProductionTaskEntity,
-        productionTask => productionTask.customer,
+        () => ProductionTaskEntity,
+        (productionTask: ProductionTaskEntity) => productionTask.customer,
     )
-    productionTask: ProductionTaskEntity[];
+    public productionTask: ProductionTaskEntity[];
 
     dtoClass = CustomerDto;
 }

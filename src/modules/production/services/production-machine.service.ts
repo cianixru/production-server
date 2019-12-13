@@ -58,10 +58,13 @@ export class ProductionMachineService {
             .take(pageOptionsDto.take)
             .getManyAndCount();
 
+        console.log(productionMachinesHistory);
+
         const pageMetaDto = new PageMetaDto({
             pageOptionsDto,
             itemCount: productionMachinesHistoryCount,
         });
+
         return new ProductionMachinesHistoryPageDto(
             productionMachinesHistory.toDtos(),
             pageMetaDto,

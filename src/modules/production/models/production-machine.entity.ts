@@ -12,10 +12,11 @@ export class ProductionMachineEntity extends AbstractEntity<
     name: string;
 
     @OneToMany(
-        type => ProductionMachineHistoryEntity,
-        productionMachineHistory => productionMachineHistory.productionMachine,
+        () => ProductionMachineHistoryEntity,
+        (productionMachineHistory: ProductionMachineHistoryEntity) =>
+            productionMachineHistory.productionMachine,
     )
-    productionMachineHistory: ProductionMachineHistoryEntity[];
+    public productionMachineHistory: ProductionMachineHistoryEntity[];
 
     dtoClass = ProductionMachineDto;
 }

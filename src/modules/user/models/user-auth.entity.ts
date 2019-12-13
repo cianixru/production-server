@@ -26,12 +26,16 @@ export class UserAuthEntity extends AbstractEntity<UserAuthDto> {
     password: string;
 
     @OneToOne(
-        type => UserEntity,
-        user => user.userAuth,
-        { nullable: false },
+        () => UserEntity,
+        (user: UserEntity) => user.userAuth,
+        {
+            cascade: true,
+            eager: true,
+            nullable: false,
+        },
     )
-    @JoinColumn({ name: 'user_id' })
-    user: UserEntity;
+    @JoinColumn()
+    public user: UserEntity;
 
     dtoClass = UserAuthDto;
 }

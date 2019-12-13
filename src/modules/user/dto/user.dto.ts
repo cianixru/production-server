@@ -43,16 +43,7 @@ export class UserDto extends AbstractDto {
     @ApiPropertyOptional({ format: 'date-time' })
     lastLogout: string;
 
-    @ApiProperty({ type: UserAuthDto })
-    userAuth: UserAuthDto;
-
-    @ApiProperty({ type: UserSalaryDto })
-    userSalary: UserSalaryDto;
-
-    constructor(
-        user: UserEntity,
-        relations: { userAuth: UserAuthDto; userSalary: UserSalaryDto },
-    ) {
+    constructor(user: UserEntity) {
         super(user);
         this.firstName = user.firstName;
         this.lastName = user.lastName;
@@ -65,7 +56,5 @@ export class UserDto extends AbstractDto {
         this.createdAt = user.createdAt;
         this.lastLogin = user.lastLogin;
         this.lastLogout = user.lastLogout;
-        this.userAuth = relations.userAuth;
-        this.userSalary = relations.userSalary;
     }
 }

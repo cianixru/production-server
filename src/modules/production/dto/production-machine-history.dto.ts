@@ -5,33 +5,26 @@ import { AbstractDto } from '../../../common/dto/abstract.dto';
 import { ProductionMachineHistoryEntity } from '../models/production-machine-history.entity';
 import { ProductionTaskDto } from './production-task.dto';
 import { ProductionMachineDto } from './production-machine.dto';
-import { UserDto } from 'modules/user/dto/user.dto';
+import { UserDto } from '../../user/dto/user.dto';
 
 export class ProductionMachineHistoryDto extends AbstractDto {
     @ApiProperty({ format: 'date-time' })
     usedAt: string;
 
-    @ApiProperty()
-    productionTaskId: number;
+    @ApiProperty({ type: ProductionTaskDto })
+    productionTask: ProductionTaskDto;
 
-    @ApiProperty()
-    productionMachineId: number;
+    @ApiProperty({ type: ProductionMachineDto })
+    productionMachine: ProductionMachineDto;
 
-    @ApiProperty()
-    userId: number;
+    @ApiProperty({ type: UserDto })
+    user: UserDto;
 
-    constructor(
-        productionMachineHistory: ProductionMachineHistoryEntity,
-        relations: {
-            productionTask: ProductionTaskDto;
-            productionMachine: ProductionMachineDto;
-            user: UserDto;
-        },
-    ) {
+    constructor(productionMachineHistory: ProductionMachineHistoryEntity) {
         super(productionMachineHistory);
         this.usedAt = productionMachineHistory.usedAt;
-        this.productionTaskId = relations.productionTask.id;
-        this.productionMachineId = relations.productionMachine.id;
-        this.userId = relations.user.id;
+        this.productionTask = productionMachineHistory.productionTask.toDto();
+        this.productionMachine = productionMachineHistory.productionMachine.toDto();
+        this.user = productionMachineHistory.user.toDto();
     }
 }
