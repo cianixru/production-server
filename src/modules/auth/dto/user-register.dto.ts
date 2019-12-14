@@ -63,7 +63,7 @@ export class UserRegisterDto {
     @IsString()
     @MinLength(6)
     @IsOptional()
-    @ApiPropertyOptional({ minLength: 6 })
+    @ApiPropertyOptional()
     readonly password: string;
 
     @IsNotEmpty()

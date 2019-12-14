@@ -8,10 +8,10 @@ import { UtilsService } from '../../../providers/services/utils.service';
 import { UserService } from '../../user/services/user.service';
 import { ContextService } from '../../../providers/services/context.service';
 import { TokenPayloadDto } from '../dto/token-payload.dto';
-import { UserAuthService } from 'modules/user/services/user-auth.service';
-import { UserAuthEntity } from 'modules/user/models/user-auth.entity';
-import { UserPasswordNotValidException } from 'exceptions/user-password-not-valid.exception';
-import { UserEntity } from 'modules/user/models/user.entity';
+import { UserAuthService } from '../../user/services/user-auth.service';
+import { UserAuthEntity } from '../../user/models/user-auth.entity';
+import { UserPasswordNotValidException } from '../../../exceptions/user-password-not-valid.exception';
+import { UserEntity } from '../../user/models/user.entity';
 
 @Injectable()
 export class AuthService {
@@ -39,7 +39,7 @@ export class AuthService {
 
         const isPasswordValid = await UtilsService.validateHash(
             userAuth && userAuth.password,
-            password,
+            password && password,
         );
 
         if (!userAuth) {

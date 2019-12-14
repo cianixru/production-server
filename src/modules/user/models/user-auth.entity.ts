@@ -19,7 +19,7 @@ export class UserAuthEntity extends AbstractEntity<UserAuthDto> {
     role: RoleType;
 
     @PrimaryGeneratedColumn('increment')
-    @Column({ unique: true })
+    @Column({ unique: true, nullable: false })
     login: number;
 
     @Column({ nullable: true, transformer: new PasswordTransformer() })

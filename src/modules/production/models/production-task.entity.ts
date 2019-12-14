@@ -7,49 +7,53 @@ import {
     CreateDateColumn,
 } from 'typeorm';
 import { AbstractEntity } from '../../../common/models/abstract.entity';
-import { ProductionMachineHistoryEntity } from './production-machine-history.entity';
 import { ProductionTaskDto } from '../dto/production-task.dto';
 import { UserEntity } from '../../user/models/user.entity';
 import { CustomerEntity } from '../../customer/models/customer.entity';
+import { ProductionMachineEntity } from './production-machine.entity';
 
 @Entity({ name: 'production_tasks' })
 export class ProductionTaskEntity extends AbstractEntity<ProductionTaskDto> {
-    @Column()
+    @Column({ nullable: false })
     public name: string;
 
-    @Column()
+    @Column({ nullable: false })
     public quantity: number;
 
     @Column({ type: 'time', nullable: false })
     public duration: string;
 
-    @CreateDateColumn()
+    @CreateDateColumn({ nullable: false })
     public createdAt: string;
 
     @ManyToOne(
         () => CustomerEntity,
         (customer: CustomerEntity) => customer.productionTask,
+        { nullable: false },
     )
     public customer: CustomerEntity;
 
     @ManyToOne(
         () => UserEntity,
         (user: UserEntity) => user.productionTask,
+        { nullable: false },
     )
     public user: UserEntity;
 
     @ManyToOne(
         () => UserEntity,
         (user: UserEntity) => user.productionTask,
+        { nullable: false },
     )
     public master: UserEntity;
 
-    @OneToMany(
-        () => ProductionMachineHistoryEntity,
-        (productionMachineHistory: ProductionMachineHistoryEntity) =>
-            productionMachineHistory.user,
+    @ManyToOne(
+        () => ProductionMachineEntity,
+        (productionMachine: ProductionMachineEntity) =>
+            productionMachine.productionTask,
+        { nullable: false },
     )
-    public productionMachineHistory: ProductionMachineHistoryEntity[];
+    public productionMachine: ProductionMachineEntity;
 
     dtoClass = ProductionTaskDto;
 }

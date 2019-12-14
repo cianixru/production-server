@@ -20,8 +20,6 @@ import { AuthUserInterceptor } from '../../../interceptors/auth-user-interceptor
 import { ProductionMachinesPageOptionsDto } from '../dto/production-machines-page-options.dto';
 import { ProductionMachinesPageDto } from '../dto/production-machines-page.dto';
 import { ProductionMachineService } from '../services/production-machine.service';
-import { ProductionMachinesHistoryPageDto } from '../dto/production-machines-history-page.dto';
-import { ProductionMachinesHistoryPageOptionsDto } from '../dto/production-machines-history-page-options.dto';
 
 @Controller('production')
 @ApiTags('Production')
@@ -43,21 +41,5 @@ export class ProductionMachineController {
         pageOptionsDto: ProductionMachinesPageOptionsDto,
     ): Promise<ProductionMachinesPageDto> {
         return this._productionMachineService.getMachines(pageOptionsDto);
-    }
-
-    @Get('machines/history')
-    @Roles(RoleType.Master, RoleType.Admin)
-    @HttpCode(HttpStatus.OK)
-    @ApiOkResponse({
-        description: 'Get machines history list',
-        type: ProductionMachinesHistoryPageDto,
-    })
-    productionMachinesHistory(
-        @Query(new ValidationPipe({ transform: true }))
-        pageOptionsDto: ProductionMachinesHistoryPageOptionsDto,
-    ): Promise<ProductionMachinesHistoryPageDto> {
-        return this._productionMachineService.getMachinesHistory(
-            pageOptionsDto,
-        );
     }
 }

@@ -1,7 +1,7 @@
 'use strict';
 
-import { IsString, IsNumber } from 'class-validator';
-import { ApiProperty } from '@nestjs/swagger';
+import { IsString, IsNumber, IsOptional } from 'class-validator';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class UserLoginDto {
     @IsNumber()
@@ -9,6 +9,7 @@ export class UserLoginDto {
     readonly login: number;
 
     @IsString()
-    @ApiProperty()
+    @IsOptional()
+    @ApiPropertyOptional()
     readonly password: string;
 }

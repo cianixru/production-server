@@ -13,13 +13,14 @@ import { IUserSalary } from '../interfaces/user-salary.interface';
 
 @Entity({ name: 'users_salary' })
 export class UserSalaryEntity extends AbstractEntity<UserSalaryDto> {
-    @Column('decimal', { precision: 13, scale: 2, default: 0 })
+    @Column('decimal', { precision: 13, scale: 2, default: 0, nullable: false })
     public salary: number;
 
     @Column({
         type: 'enum',
         enum: ContractType,
         default: ContractType.FullTime,
+        nullable: false,
     })
     public contractType: ContractType;
 

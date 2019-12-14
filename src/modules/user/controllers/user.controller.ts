@@ -40,7 +40,7 @@ export class UserController {
     getUsers(
         @Query(new ValidationPipe({ transform: true }))
         pageOptionsDto: UsersPageOptionsDto,
-    ): Promise<UsersPageDto | any> {
+    ): Promise<UsersPageDto> {
         return this._userService.getUsers(pageOptionsDto);
     }
 }

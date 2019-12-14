@@ -6,28 +6,28 @@ import { ProductionTaskEntity } from '../../production/models/production-task.en
 
 @Entity({ name: 'customers' })
 export class CustomerEntity extends AbstractEntity<CustomerDto> {
-    @Column()
+    @Column({ nullable: false })
     public name: string;
 
-    @Column({ unique: true })
+    @Column({ unique: true, nullable: false })
     public email: string;
 
     @Column()
     public phone: string;
 
-    @Column()
+    @Column({ nullable: false })
     public street: string;
 
-    @Column()
+    @Column({ nullable: false })
     public city: string;
 
-    @Column()
+    @Column({ nullable: false })
     public state: string;
 
-    @Column()
+    @Column({ nullable: false })
     public zip: string;
 
-    @Column()
+    @Column({ nullable: false })
     public tax: string;
 
     @CreateDateColumn({ type: 'date' })

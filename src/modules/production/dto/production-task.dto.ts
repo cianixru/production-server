@@ -5,6 +5,7 @@ import { AbstractDto } from '../../../common/dto/abstract.dto';
 import { ProductionTaskEntity } from '../models/production-task.entity';
 import { CustomerDto } from '../../customer/dto/customer.dto';
 import { UserDto } from '../../user/dto/user.dto';
+import { ProductionMachineDto } from './production-machine.dto';
 
 export class ProductionTaskDto extends AbstractDto {
     @ApiProperty()
@@ -28,6 +29,9 @@ export class ProductionTaskDto extends AbstractDto {
     @ApiProperty({ type: UserDto })
     master: UserDto;
 
+    @ApiProperty({ type: ProductionMachineDto })
+    productionMachine: ProductionMachineDto;
+
     constructor(productionTask: ProductionTaskEntity) {
         super(productionTask);
         this.name = productionTask.name;
@@ -37,5 +41,6 @@ export class ProductionTaskDto extends AbstractDto {
         this.customer = productionTask.customer.toDto();
         this.user = productionTask.user.toDto();
         this.master = productionTask.master.toDto();
+        this.productionMachine = productionTask.productionMachine.toDto();
     }
 }

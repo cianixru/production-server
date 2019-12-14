@@ -28,8 +28,6 @@ export class ProductionTaskService {
             .where('user.id = :id', { id })
             .getOne();
 
-        console.log(productionTask);
-
         return productionTask.toDto();
     }
 
@@ -43,16 +41,21 @@ export class ProductionTaskService {
             .leftJoinAndSelect('productionTask.user', 'user')
             .leftJoinAndSelect('productionTask.master', 'master')
             .leftJoinAndSelect('productionTask.customer', 'customer')
+            .leftJoinAndSelect(
+                'productionTask.productionMachine',
+                'productionMachine',
+            )
             .skip(pageOptionsDto.skip)
             .take(pageOptionsDto.take)
             .getManyAndCount();
+
+        console.log(productionTasks);
 
         const pageMetaDto = new PageMetaDto({
             pageOptionsDto,
             itemCount: productionTasksCount,
         });
 
-        //todo: add relations to dto
         return new ProductionTasksPageDto(
             productionTasks.toDtos(),
             pageMetaDto,

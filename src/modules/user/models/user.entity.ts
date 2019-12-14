@@ -11,34 +11,32 @@ import { AbstractEntity } from '../../../common/models/abstract.entity';
 import { UserDto } from '../dto/user.dto';
 import { UserAuthEntity } from './user-auth.entity';
 import { UserSalaryEntity } from './user-salary.entity';
-import { ProductionMachineHistoryEntity } from '../../production/models/production-machine-history.entity';
 import { ProductionTaskEntity } from '../../production/models/production-task.entity';
-import { IUser } from '../interfaces/user.interface';
 
 @Entity({ name: 'users' })
 export class UserEntity extends AbstractEntity<UserDto> {
-    @Column()
+    @Column({ nullable: false })
     public firstName: string;
 
-    @Column()
+    @Column({ nullable: false })
     public lastName: string;
 
-    @Column({ unique: true })
+    @Column({ unique: true, nullable: false })
     public email: string;
 
-    @Column()
+    @Column({ nullable: false })
     public phone: string;
 
-    @Column()
+    @Column({ nullable: false })
     public street: string;
 
-    @Column()
+    @Column({ nullable: false })
     public city: string;
 
-    @Column()
+    @Column({ nullable: false })
     public state: string;
 
-    @Column()
+    @Column({ nullable: false })
     public zip: string;
 
     @CreateDateColumn({ type: 'date' })
@@ -53,25 +51,21 @@ export class UserEntity extends AbstractEntity<UserDto> {
     @OneToOne(
         () => UserAuthEntity,
         (userAuth: UserAuthEntity) => userAuth.user,
+        { nullable: false },
     )
     public userAuth: UserAuthEntity;
 
     @OneToOne(
         () => UserSalaryEntity,
         (userSalary: UserSalaryEntity) => userSalary.user,
+        { nullable: false },
     )
     public userSalary: UserSalaryEntity;
 
     @OneToMany(
-        () => ProductionMachineHistoryEntity,
-        (productionMachineHistory: ProductionMachineHistoryEntity) =>
-            productionMachineHistory.user,
-    )
-    public productionMachineHistory: ProductionMachineHistoryEntity[];
-
-    @OneToMany(
         () => ProductionTaskEntity,
         (productionTask: ProductionTaskEntity) => productionTask.user,
+        { nullable: false },
     )
     public productionTask: ProductionTaskEntity[];
 
