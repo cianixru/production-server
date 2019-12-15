@@ -13,6 +13,7 @@ import { ProductionMachineService } from './production-machine.service';
 import { UserNotFoundException } from 'exceptions/user-not-found.exception';
 import { CustomerNotFoundException } from 'exceptions/customer-not-found.exception';
 import { ProductionMachineNotFoundException } from 'exceptions/production-machine-not-found.exception';
+import { Order } from 'common/constants/order';
 
 @Injectable()
 export class ProductionTaskService {
@@ -40,7 +41,7 @@ export class ProductionTaskService {
             )
             .where('user.id = :id', { id })
             .andWhere('productionTask.status = :status', { status: false })
-            .orderBy('productionTask.createdAt', 'ASC')
+            .orderBy('productionTask.createdAt', Order.ASC)
             .getOne();
 
         return productionTask ? productionTask.toDto() : undefined;
