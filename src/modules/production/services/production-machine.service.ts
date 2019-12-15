@@ -6,12 +6,22 @@ import { ProductionMachinesPageDto } from '../dto/production-machines-page.dto';
 import { ProductionMachineDto } from '../dto/production-machine.dto';
 import { ProductionMachineEntity } from '../models/production-machine.entity';
 import { ProductionMachineRegisterDto } from '../dto/production-machine-register.dto';
+import { FindConditions } from 'typeorm';
 
 @Injectable()
 export class ProductionMachineService {
     constructor(
         public readonly productionMachineRepository: ProductionMachineRepository,
     ) {}
+
+    /**
+     * Find single customer
+     */
+    findMachine(
+        findData: FindConditions<ProductionMachineEntity>,
+    ): Promise<ProductionMachineEntity> {
+        return this.productionMachineRepository.findOne(findData);
+    }
 
     createMachine(
         productionMachineRegisterDto: ProductionMachineRegisterDto,

@@ -30,7 +30,7 @@ export class UserController {
     constructor(private _userService: UserService) {}
 
     @Get('/')
-    @Roles(RoleType.Admin)
+    @Roles(RoleType.Master, RoleType.Admin)
     @HttpCode(HttpStatus.OK)
     @ApiResponse({
         status: HttpStatus.OK,

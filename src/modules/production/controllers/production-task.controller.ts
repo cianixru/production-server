@@ -9,6 +9,8 @@ import {
     UseGuards,
     UseInterceptors,
     ValidationPipe,
+    Post,
+    Body,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags, ApiOkResponse } from '@nestjs/swagger';
 
@@ -24,6 +26,7 @@ import { AuthUser } from 'decorators/auth-user.decorator';
 import { UserEntity } from 'modules/user/models/user.entity';
 import { ProductionTaskDto } from '../dto/production-task.dto';
 import { ProductionTaskEntity } from '../models/production-task.entity';
+import { ProductionTaskRegisterDto } from '../dto/production-task-register.dto';
 
 @Controller('production')
 @ApiTags('Production')
@@ -40,24 +43,42 @@ export class ProductionTaskController {
         description: 'Get production tasks list',
         type: ProductionTasksPageDto,
     })
-    productionTasks(
+    getProductionTasks(
         @Query(new ValidationPipe({ transform: true }))
         pageOptionsDto: ProductionTasksPageOptionsDto,
     ): Promise<ProductionTasksPageDto> {
         return this._productionTaskService.getTasks(pageOptionsDto);
     }
 
+    @Post('tasks')
+    @Roles(RoleType.Master, RoleType.Admin)
+    @HttpCode(HttpStatus.OK)
+    @ApiOkResponse({
+        description: 'Register production task',
+        type: ProductionTaskRegisterDto,
+    })
+    async productionTaskRegister(
+        @Body() productionTaskRegisterDto: ProductionTaskRegisterDto,
+        @AuthUser() master: UserEntity,
+    ): Promise<ProductionTaskDto> {
+        const createdProductionTask = await this._productionTaskService.createProductionTask(
+            productionTaskRegisterDto,
+            master,
+        );
+
+        return;
+
+        // return createdProductionTask.toDto();
+    }
+
     @Get('task')
     @Roles(RoleType.Worker)
     @HttpCode(HttpStatus.OK)
-    @UseGuards(AuthGuard)
-    @UseInterceptors(AuthUserInterceptor)
-    @ApiBearerAuth()
     @ApiOkResponse({
         type: ProductionTaskDto,
         description: 'Get task',
     })
-    productionTask(
+    getProductionTask(
         @AuthUser() user: UserEntity,
     ): Promise<ProductionTaskDto | undefined> {
         return this._productionTaskService.getTask(user);

@@ -3,13 +3,13 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 
 import { ConfigService } from '../../../shared/services/config.service';
-import { UserService } from '../../user/services/user.service';
+import { UserAuthService } from '../../user/services/user-auth.service';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
     constructor(
         public readonly configService: ConfigService,
-        public readonly userService: UserService,
+        public readonly userAuthService: UserAuthService,
     ) {
         super({
             jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -24,12 +24,14 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
             throw new UnauthorizedException();
         }
 
-        const user = await this.userService.findOne({ uuid });
+        const userAuth = await this.userAuthService.findUser({ uuid });
 
-        if (!user) {
+        //todo: remove relations and przenies z user-auth.service
+
+        if (!userAuth) {
             throw new UnauthorizedException();
         }
 
-        return user;
+        return userAuth;
     }
 }

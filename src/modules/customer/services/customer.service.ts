@@ -5,10 +5,20 @@ import { CustomerRegisterDto } from '../dto/customer-register.dto';
 import { CustomersPageOptionsDto } from '../dto/customers-page-options.dto';
 import { CustomersPageDto } from '../dto/customers-page.dto';
 import { PageMetaDto } from 'common/dto/page-meta.dto';
+import { FindConditions } from 'typeorm';
 
 @Injectable()
 export class CustomerService {
     constructor(public readonly customerRepository: CustomerRepository) {}
+
+    /**
+     * Find single customer
+     */
+    findCustomer(
+        findData: FindConditions<CustomerEntity>,
+    ): Promise<CustomerEntity> {
+        return this.customerRepository.findOne(findData);
+    }
 
     createCustomer(
         customerRegisterDto: CustomerRegisterDto,

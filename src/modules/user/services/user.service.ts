@@ -3,14 +3,11 @@ import { FindConditions, UpdateResult } from 'typeorm';
 import { UserEntity } from '../models/user.entity';
 import { UserRegisterDto } from '../../auth/dto/user-register.dto';
 import { UserRepository } from '../repositories/user.repository';
-import { ValidatorService } from '../../../shared/services/validator.service';
-import { AwsS3Service } from '../../../shared/services/aws-s3.service';
 import { UsersPageOptionsDto } from '../dto/users-page-options.dto';
 import { PageMetaDto } from '../../../common/dto/page-meta.dto';
 import { UsersPageDto } from '../dto/users-page.dto';
 import { UserAuthRepository } from '../repositories/user-auth.repository';
 import { UserSalaryRepository } from '../repositories/user-salary.repository';
-import { UserDto } from '../dto/user.dto';
 import { format } from 'date-fns';
 import { UserAuthEntity } from '../models/user-auth.entity';
 import { UserSalaryEntity } from '../models/user-salary.entity';
@@ -21,17 +18,15 @@ export class UserService {
         public readonly userRepository: UserRepository,
         public readonly userAuthRepository: UserAuthRepository,
         public readonly userSalaryRepository: UserSalaryRepository,
-        public readonly validatorService: ValidatorService,
-        public readonly awsS3Service: AwsS3Service,
     ) {}
 
     /**
      * Find single user
      */
-    findOne(findData: FindConditions<UserEntity>): Promise<UserEntity> {
-        return this.userRepository.findOne(findData, {
-            relations: ['userAuth', 'userSalary'],
-        });
+    findUser(findData: FindConditions<UserEntity>): Promise<UserEntity> {
+        return this.userRepository.findOne(findData);
+
+        //todo: remove relations and przenies z user-auth.service
     }
 
     async findByUsernameOrEmail(

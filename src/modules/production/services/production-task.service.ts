@@ -5,18 +5,24 @@ import { ProductionTasksPageOptionsDto } from '../dto/production-tasks-page-opti
 import { ProductionTasksPageDto } from '../dto/production-tasks-page.dto';
 import { UserEntity } from '../../user/models/user.entity';
 import { FindConditions } from 'typeorm';
-import { ProductionTaskEntity } from '../models/production-task.entity';
 import { ProductionTaskDto } from '../dto/production-task.dto';
+import { ProductionTaskRegisterDto } from '../dto/production-task-register.dto';
+import { UserService } from '../../user/services/user.service';
+import { CustomerService } from '../../customer/services/customer.service';
+import { ProductionMachineService } from './production-machine.service';
 
 @Injectable()
 export class ProductionTaskService {
     constructor(
         public readonly productionTaskRepository: ProductionTaskRepository,
+        public readonly productionMachineService: ProductionMachineService,
+        public readonly userService: UserService,
+        public readonly customerService: CustomerService,
     ) {}
 
     async getTask(
         user: FindConditions<UserEntity>,
-    ): Promise<ProductionTaskEntity | undefined> {
+    ): Promise<ProductionTaskDto | undefined> {
         const { id } = user;
         const queryBuilder = this.productionTaskRepository.createQueryBuilder(
             'productionTask',
@@ -62,5 +68,31 @@ export class ProductionTaskService {
             productionTasks.toDtos(),
             pageMetaDto,
         );
+    }
+
+    async createProductionTask(
+        productionTaskRegisterDto: ProductionTaskRegisterDto,
+        master: UserEntity,
+    ) {
+        const {
+            userUuid,
+            productionMachineUuid,
+            customerUuid,
+            duration,
+            quantity,
+            name,
+        } = productionTaskRegisterDto;
+
+        const [user, customer, productionMachine] = await Promise.all([
+            this.userService.findUser({ uuid: userUuid }),
+            this.customerService.findCustomer({ uuid: customerUuid }),
+            this.productionMachineService.findMachine({
+                uuid: productionMachineUuid,
+            }),
+        ]);
+
+        console.log('user', user);
+        console.log('customer', customer);
+        console.log('productionMachine', productionMachine);
     }
 }

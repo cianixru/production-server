@@ -58,7 +58,7 @@ export class CustomerController {
         description: 'Get customers list',
         type: CustomersPageDto,
     })
-    getUsers(
+    getCustomers(
         @Query(new ValidationPipe({ transform: true }))
         pageOptionsDto: CustomersPageOptionsDto,
     ): Promise<CustomersPageDto> {

@@ -42,8 +42,8 @@ export class AuthController {
         const userEntity = await this.authService.validateUser(userLoginDto);
 
         const [token] = await Promise.all([
-            await this.authService.createToken(userEntity),
-            await this.userService.setLastLoginDate(userEntity),
+            this.authService.createToken(userEntity),
+            this.userService.setLastLoginDate(userEntity),
         ]);
 
         return new LoginPayloadDto(token);

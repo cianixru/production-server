@@ -14,9 +14,9 @@ import { UserEntity } from '../modules/user/models/user.entity';
 export class AuthUserInterceptor implements NestInterceptor {
     intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
         const request = context.switchToHttp().getRequest();
-        const user = <UserEntity>request.user;
+        const userAuth = <UserAuthEntity>request.user;
 
-        AuthService.setAuthUser(user);
+        AuthService.setAuthUser(userAuth);
 
         return next.handle();
     }
