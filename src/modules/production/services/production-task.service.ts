@@ -10,6 +10,9 @@ import { ProductionTaskRegisterDto } from '../dto/production-task-register.dto';
 import { UserService } from '../../user/services/user.service';
 import { CustomerService } from '../../customer/services/customer.service';
 import { ProductionMachineService } from './production-machine.service';
+import { UserNotFoundException } from 'exceptions/user-not-found.exception';
+import { CustomerNotFoundException } from 'exceptions/customer-not-found.exception';
+import { ProductionMachineNotFoundException } from 'exceptions/production-machine-not-found.exception';
 
 @Injectable()
 export class ProductionTaskService {
@@ -91,8 +94,31 @@ export class ProductionTaskService {
             }),
         ]);
 
-        console.log('user', user);
-        console.log('customer', customer);
-        console.log('productionMachine', productionMachine);
+        if (!user) {
+            throw new UserNotFoundException();
+        }
+        if (!customer) {
+            throw new CustomerNotFoundException();
+        }
+        if (!productionMachine) {
+            throw new ProductionMachineNotFoundException();
+        }
+
+        const createdTask = {
+            user,
+            customer,
+            productionMachine,
+            master,
+            duration,
+            quantity,
+            name,
+        };
+
+        const productionTask = this.productionTaskRepository.create(
+            createdTask,
+        );
+        await this.productionTaskRepository.save(productionTask);
+
+        return productionTask;
     }
 }

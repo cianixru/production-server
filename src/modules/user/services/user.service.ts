@@ -20,32 +20,8 @@ export class UserService {
         public readonly userSalaryRepository: UserSalaryRepository,
     ) {}
 
-    /**
-     * Find single user
-     */
     findUser(findData: FindConditions<UserEntity>): Promise<UserEntity> {
         return this.userRepository.findOne(findData);
-
-        //todo: remove relations and przenies z user-auth.service
-    }
-
-    async findByUsernameOrEmail(
-        options: Partial<{ username: string; email: string }>,
-    ): Promise<UserEntity | undefined> {
-        const queryBuilder = this.userRepository.createQueryBuilder('user');
-
-        if (options.email) {
-            queryBuilder.orWhere('user.email = :email', {
-                email: options.email,
-            });
-        }
-        if (options.username) {
-            queryBuilder.orWhere('user.username = :username', {
-                username: options.username,
-            });
-        }
-
-        return queryBuilder.getOne();
     }
 
     async createUser(

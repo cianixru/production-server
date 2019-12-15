@@ -21,6 +21,7 @@ import { UserLoginDto } from '../dto/user-login.dto';
 import { UserRegisterDto } from '../dto/user-register.dto';
 import { RegisterPayloadDto } from '../dto/register-payload.dto';
 import { UpdateResult } from 'typeorm';
+import { UserAuthEntity } from 'modules/user/models/user-auth.entity';
 
 @Controller('auth')
 @ApiTags('Auth')
@@ -79,7 +80,8 @@ export class AuthController {
     @ApiOkResponse({
         description: 'Successfully logout',
     })
-    userLogout(@AuthUser() user: UserEntity): Promise<UpdateResult> {
+    userLogout(@AuthUser() userAuth: UserAuthEntity): Promise<UpdateResult> {
+        const { user } = userAuth;
         return this.userService.setLastLogoutDate(user);
     }
 }

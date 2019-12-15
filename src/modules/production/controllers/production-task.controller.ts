@@ -23,10 +23,9 @@ import { ProductionTaskService } from '../services/production-task.service';
 import { ProductionTasksPageDto } from '../dto/production-tasks-page.dto';
 import { ProductionTasksPageOptionsDto } from '../dto/production-tasks-page-options.dto';
 import { AuthUser } from 'decorators/auth-user.decorator';
-import { UserEntity } from 'modules/user/models/user.entity';
 import { ProductionTaskDto } from '../dto/production-task.dto';
-import { ProductionTaskEntity } from '../models/production-task.entity';
 import { ProductionTaskRegisterDto } from '../dto/production-task-register.dto';
+import { UserAuthEntity } from 'modules/user/models/user-auth.entity';
 
 @Controller('production')
 @ApiTags('Production')
@@ -59,16 +58,15 @@ export class ProductionTaskController {
     })
     async productionTaskRegister(
         @Body() productionTaskRegisterDto: ProductionTaskRegisterDto,
-        @AuthUser() master: UserEntity,
+        @AuthUser() userAuth: UserAuthEntity,
     ): Promise<ProductionTaskDto> {
+        const { user } = userAuth;
         const createdProductionTask = await this._productionTaskService.createProductionTask(
             productionTaskRegisterDto,
-            master,
+            user,
         );
 
-        return;
-
-        // return createdProductionTask.toDto();
+        return createdProductionTask.toDto();
     }
 
     @Get('task')
@@ -79,8 +77,9 @@ export class ProductionTaskController {
         description: 'Get task',
     })
     getProductionTask(
-        @AuthUser() user: UserEntity,
+        @AuthUser() userAuth: UserAuthEntity,
     ): Promise<ProductionTaskDto | undefined> {
+        const { user } = userAuth;
         return this._productionTaskService.getTask(user);
     }
 }
