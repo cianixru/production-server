@@ -20,6 +20,9 @@ export class ProductionTaskEntity extends AbstractEntity<ProductionTaskDto> {
     @Column({ nullable: false })
     public quantity: number;
 
+    @Column('boolean', { nullable: false, default: false })
+    public status: boolean;
+
     @Column({ type: 'time', nullable: false })
     public duration: string;
 

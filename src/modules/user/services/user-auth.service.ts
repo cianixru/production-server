@@ -11,12 +11,11 @@ export class UserAuthService {
     findUser(
         options: Partial<{ uuid: string; login: number }>,
     ): Promise<UserAuthEntity> {
-        const queryBuilder = this.userAuthRepository.createQueryBuilder(
-            'userAuth',
-        );
+        const queryBuilder = this.userAuthRepository
+            .createQueryBuilder('userAuth')
+            .leftJoinAndSelect('userAuth.user', 'user');
 
         if (options.uuid) {
-            queryBuilder.leftJoinAndSelect('userAuth.user', 'user');
             queryBuilder.orWhere('user.uuid = :uuid', {
                 uuid: options.uuid,
             });

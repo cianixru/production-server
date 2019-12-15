@@ -39,6 +39,8 @@ export class ProductionTaskService {
                 'productionMachine',
             )
             .where('user.id = :id', { id })
+            .andWhere('productionTask.status = :status', { status: false })
+            .orderBy('productionTask.createdAt', 'ASC')
             .getOne();
 
         return productionTask ? productionTask.toDto() : undefined;
@@ -113,7 +115,6 @@ export class ProductionTaskService {
             quantity,
             name,
         };
-
         const productionTask = this.productionTaskRepository.create(
             createdTask,
         );

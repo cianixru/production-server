@@ -54,7 +54,7 @@ export class ProductionTaskController {
     @HttpCode(HttpStatus.OK)
     @ApiOkResponse({
         description: 'Register production task',
-        type: ProductionTaskRegisterDto,
+        type: ProductionTaskDto,
     })
     async productionTaskRegister(
         @Body() productionTaskRegisterDto: ProductionTaskRegisterDto,

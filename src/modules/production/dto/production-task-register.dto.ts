@@ -1,6 +1,12 @@
 'use strict';
 
-import { IsString, IsNotEmpty, IsNumber } from 'class-validator';
+import {
+    IsString,
+    IsNotEmpty,
+    IsNumber,
+    IsBoolean,
+    IsOptional,
+} from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class ProductionTaskRegisterDto {
@@ -13,6 +19,11 @@ export class ProductionTaskRegisterDto {
     @IsNotEmpty()
     @ApiProperty()
     readonly quantity: number;
+
+    @IsBoolean()
+    @IsOptional()
+    @ApiProperty()
+    readonly status: boolean;
 
     @IsString()
     @IsNotEmpty()
