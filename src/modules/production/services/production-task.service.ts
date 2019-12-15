@@ -84,9 +84,6 @@ export class ProductionTaskService {
             userUuid,
             productionMachineUuid,
             customerUuid,
-            duration,
-            quantity,
-            name,
         } = productionTaskRegisterDto;
 
         const [user, customer, productionMachine] = await Promise.all([
@@ -108,13 +105,11 @@ export class ProductionTaskService {
         }
 
         const createdTask = {
+            ...productionTaskRegisterDto,
+            master,
             user,
             customer,
             productionMachine,
-            master,
-            duration,
-            quantity,
-            name,
         };
         const productionTask = this.productionTaskRepository.create(
             createdTask,

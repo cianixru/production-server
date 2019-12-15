@@ -12,7 +12,10 @@ export class ProductionTaskDto extends AbstractDto {
     name: string;
 
     @ApiProperty()
-    quantity: number;
+    quantityPlanned: number;
+
+    @ApiProperty({ default: 0 })
+    quantityDone: number;
 
     @ApiProperty({ type: 'boolean' })
     status: boolean;
@@ -38,7 +41,8 @@ export class ProductionTaskDto extends AbstractDto {
     constructor(productionTask: ProductionTaskEntity) {
         super(productionTask);
         this.name = productionTask.name;
-        this.quantity = productionTask.quantity;
+        this.quantityPlanned = productionTask.quantityPlanned;
+        this.quantityDone = productionTask.quantityDone;
         this.status = productionTask.status;
         this.duration = productionTask.duration;
         this.createdAt = productionTask.createdAt;
