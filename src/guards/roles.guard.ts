@@ -19,10 +19,10 @@ export class RolesGuard implements CanActivate {
         }
 
         const request = context.switchToHttp().getRequest();
-        const userAuth = <UserAuthEntity>request.user.userAuth;
+        const {
+            userAuth: { role },
+        } = <UserEntity>request.user;
 
-        console.log('1', userAuth);
-
-        return roles.includes(userAuth.role);
+        return roles.includes(role);
     }
 }

@@ -52,12 +52,12 @@ export class UtilsService {
     }
     /**
      * validate text with hash
-     * @param {string | null | undefined} password
+     * @param {string | null} password
      * @param {string | undefined} hash
      * @returns {Promise<boolean>}
      */
     static validateHash(
-        hash: string | null | undefined,
+        hash: string | null,
         password: string | undefined,
     ): Promise<boolean> {
         return bcrypt.compare(password || '', hash || '');

@@ -53,11 +53,11 @@ export class AuthService {
         return userAuth.user;
     }
 
-    static setAuthUser(userAuth: UserAuthEntity) {
-        ContextService.set(AuthService._authUserKey, userAuth);
+    static setAuthUser(user: UserEntity) {
+        ContextService.set(AuthService._authUserKey, user);
     }
 
-    static getAuthUser(): UserAuthEntity {
+    static getAuthUser(): UserEntity {
         return ContextService.get(AuthService._authUserKey);
     }
 }

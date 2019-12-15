@@ -10,7 +10,7 @@ import { PageMetaDto } from 'common/dto/page-meta.dto';
 export class CustomerService {
     constructor(public readonly customerRepository: CustomerRepository) {}
 
-    async createCustomer(
+    createCustomer(
         customerRegisterDto: CustomerRegisterDto,
     ): Promise<CustomerEntity> {
         const user = this.customerRepository.create(customerRegisterDto);

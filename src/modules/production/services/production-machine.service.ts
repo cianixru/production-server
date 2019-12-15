@@ -3,12 +3,25 @@ import { ProductionMachineRepository } from '../repositories/production-machine.
 import { PageMetaDto } from 'common/dto/page-meta.dto';
 import { ProductionMachinesPageOptionsDto } from '../dto/production-machines-page-options.dto';
 import { ProductionMachinesPageDto } from '../dto/production-machines-page.dto';
+import { ProductionMachineDto } from '../dto/production-machine.dto';
+import { ProductionMachineEntity } from '../models/production-machine.entity';
+import { ProductionMachineRegisterDto } from '../dto/production-machine-register.dto';
 
 @Injectable()
 export class ProductionMachineService {
     constructor(
         public readonly productionMachineRepository: ProductionMachineRepository,
     ) {}
+
+    createMachine(
+        productionMachineRegisterDto: ProductionMachineRegisterDto,
+    ): Promise<ProductionMachineEntity> {
+        const productionMachine = this.productionMachineRepository.create(
+            productionMachineRegisterDto,
+        );
+
+        return this.productionMachineRepository.save(productionMachine);
+    }
 
     async getMachines(
         pageOptionsDto: ProductionMachinesPageOptionsDto,

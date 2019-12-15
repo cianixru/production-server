@@ -8,12 +8,13 @@ import {
 
 import { UserAuthEntity } from '../modules/user/models/user-auth.entity';
 import { AuthService } from '../modules/auth/services/auth.service';
+import { UserEntity } from '../modules/user/models/user.entity';
 
 @Injectable()
 export class AuthUserInterceptor implements NestInterceptor {
     intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
         const request = context.switchToHttp().getRequest();
-        const user = <UserAuthEntity>request.user.userAuth;
+        const user = <UserEntity>request.user;
 
         AuthService.setAuthUser(user);
 

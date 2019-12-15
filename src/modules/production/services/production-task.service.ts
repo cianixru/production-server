@@ -15,9 +15,9 @@ export class ProductionTaskService {
     ) {}
 
     async getTask(
-        findData: FindConditions<UserEntity>,
-    ): Promise<ProductionTaskDto> {
-        const { id } = findData;
+        user: FindConditions<UserEntity>,
+    ): Promise<ProductionTaskEntity | undefined> {
+        const { id } = user;
         const queryBuilder = this.productionTaskRepository.createQueryBuilder(
             'productionTask',
         );
@@ -25,10 +25,14 @@ export class ProductionTaskService {
             .leftJoinAndSelect('productionTask.user', 'user')
             .leftJoinAndSelect('productionTask.master', 'master')
             .leftJoinAndSelect('productionTask.customer', 'customer')
+            .leftJoinAndSelect(
+                'productionTask.productionMachine',
+                'productionMachine',
+            )
             .where('user.id = :id', { id })
             .getOne();
 
-        return productionTask.toDto();
+        return productionTask ? productionTask.toDto() : undefined;
     }
 
     async getTasks(
@@ -48,8 +52,6 @@ export class ProductionTaskService {
             .skip(pageOptionsDto.skip)
             .take(pageOptionsDto.take)
             .getManyAndCount();
-
-        console.log(productionTasks);
 
         const pageMetaDto = new PageMetaDto({
             pageOptionsDto,

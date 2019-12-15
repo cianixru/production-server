@@ -9,6 +9,8 @@ import {
     UseGuards,
     UseInterceptors,
     ValidationPipe,
+    Post,
+    Body,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags, ApiOkResponse } from '@nestjs/swagger';
 
@@ -20,6 +22,8 @@ import { AuthUserInterceptor } from '../../../interceptors/auth-user-interceptor
 import { ProductionMachinesPageOptionsDto } from '../dto/production-machines-page-options.dto';
 import { ProductionMachinesPageDto } from '../dto/production-machines-page.dto';
 import { ProductionMachineService } from '../services/production-machine.service';
+import { ProductionMachineDto } from '../dto/production-machine.dto';
+import { ProductionMachineRegisterDto } from '../dto/production-machine-register.dto';
 
 @Controller('production')
 @ApiTags('Production')
@@ -41,5 +45,22 @@ export class ProductionMachineController {
         pageOptionsDto: ProductionMachinesPageOptionsDto,
     ): Promise<ProductionMachinesPageDto> {
         return this._productionMachineService.getMachines(pageOptionsDto);
+    }
+
+    @Post('machines')
+    @Roles(RoleType.Master, RoleType.Admin)
+    @HttpCode(HttpStatus.OK)
+    @ApiOkResponse({
+        type: ProductionMachineDto,
+        description: 'Successfully Registered',
+    })
+    async productionMachineRegister(
+        @Body() productionMachineRegisterDto: ProductionMachineRegisterDto,
+    ): Promise<ProductionMachineDto> {
+        const createdMachine = await this._productionMachineService.createMachine(
+            productionMachineRegisterDto,
+        );
+
+        return createdMachine.toDto();
     }
 }

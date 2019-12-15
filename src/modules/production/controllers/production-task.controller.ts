@@ -54,9 +54,12 @@ export class ProductionTaskController {
     @UseInterceptors(AuthUserInterceptor)
     @ApiBearerAuth()
     @ApiOkResponse({
+        type: ProductionTaskDto,
         description: 'Get task',
     })
-    productionTask(@AuthUser() user: UserEntity): Promise<ProductionTaskDto> {
+    productionTask(
+        @AuthUser() user: UserEntity,
+    ): Promise<ProductionTaskDto | undefined> {
         return this._productionTaskService.getTask(user);
     }
 }
