@@ -11,6 +11,7 @@ import {
     ValidationPipe,
     Post,
     Body,
+    Patch,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags, ApiOkResponse } from '@nestjs/swagger';
 
@@ -76,10 +77,24 @@ export class ProductionTaskController {
         type: ProductionTaskDto,
         description: 'Get task',
     })
-    getProductionTask(
+    async getProductionTask(
         @AuthUser() userAuth: UserAuthEntity,
     ): Promise<ProductionTaskDto | undefined> {
         const { user } = userAuth;
-        return this._productionTaskService.getTask(user);
+        const productionTask = await this._productionTaskService.getTask(user);
+
+        return productionTask.toDto() || undefined;
+    }
+
+    @Patch('task')
+    @Roles(RoleType.Worker)
+    @HttpCode(HttpStatus.OK)
+    @ApiOkResponse({
+        type: ProductionTaskDto,
+        description: 'Update task quantity',
+    })
+    updateTaskQuantity(@AuthUser() userAuth: UserAuthEntity) {
+        const { user } = userAuth;
+        return this._productionTaskService.updateQuantity(user);
     }
 }

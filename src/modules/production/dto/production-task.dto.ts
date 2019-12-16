@@ -15,7 +15,7 @@ export class ProductionTaskDto extends AbstractDto {
     quantityPlanned: number;
 
     @ApiProperty({ default: 0 })
-    quantityDone: number;
+    quantityMade: number;
 
     @ApiProperty({ type: 'boolean' })
     status: boolean;
@@ -42,7 +42,7 @@ export class ProductionTaskDto extends AbstractDto {
         super(productionTask);
         this.name = productionTask.name;
         this.quantityPlanned = productionTask.quantityPlanned;
-        this.quantityDone = productionTask.quantityDone;
+        this.quantityMade = productionTask.quantityMade;
         this.status = productionTask.status;
         this.duration = productionTask.duration;
         this.createdAt = productionTask.createdAt;

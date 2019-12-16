@@ -71,7 +71,7 @@ export class UserRegisterDto {
     readonly salary: number;
 
     @IsEnum(ContractType)
-    @IsNotEmpty()
+    @IsOptional()
     @ApiProperty({ enum: ContractType })
     readonly contractType: ContractType;
 }

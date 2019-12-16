@@ -21,7 +21,7 @@ export class ProductionTaskEntity extends AbstractEntity<ProductionTaskDto> {
     public quantityPlanned: number;
 
     @Column({ nullable: false, default: 0 })
-    public quantityDone: number;
+    public quantityMade: number;
 
     @Column('boolean', { nullable: false, default: false })
     public status: boolean;

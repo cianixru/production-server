@@ -4,7 +4,7 @@ import { ProductionTaskRepository } from '../repositories/production-task.reposi
 import { ProductionTasksPageOptionsDto } from '../dto/production-tasks-page-options.dto';
 import { ProductionTasksPageDto } from '../dto/production-tasks-page.dto';
 import { UserEntity } from '../../user/models/user.entity';
-import { FindConditions } from 'typeorm';
+import { FindConditions, UpdateResult } from 'typeorm';
 import { ProductionTaskDto } from '../dto/production-task.dto';
 import { ProductionTaskRegisterDto } from '../dto/production-task-register.dto';
 import { UserService } from '../../user/services/user.service';
@@ -14,6 +14,8 @@ import { UserNotFoundException } from 'exceptions/user-not-found.exception';
 import { CustomerNotFoundException } from 'exceptions/customer-not-found.exception';
 import { ProductionMachineNotFoundException } from 'exceptions/production-machine-not-found.exception';
 import { Order } from 'common/constants/order';
+import { ProductionTaskEntity } from '../models/production-task.entity';
+import { ProductionTaskNotFoundException } from 'exceptions/production-task-not-found.exception';
 
 @Injectable()
 export class ProductionTaskService {
@@ -26,7 +28,7 @@ export class ProductionTaskService {
 
     async getTask(
         user: FindConditions<UserEntity>,
-    ): Promise<ProductionTaskDto | undefined> {
+    ): Promise<ProductionTaskEntity | undefined> {
         const { id } = user;
         const queryBuilder = this.productionTaskRepository.createQueryBuilder(
             'productionTask',
@@ -44,7 +46,8 @@ export class ProductionTaskService {
             .orderBy('productionTask.createdAt', Order.ASC)
             .getOne();
 
-        return productionTask ? productionTask.toDto() : undefined;
+        // return productionTask ? productionTask.toDto() : undefined;
+        return productionTask || undefined;
     }
 
     async getTasks(
@@ -79,7 +82,7 @@ export class ProductionTaskService {
     async createProductionTask(
         productionTaskRegisterDto: ProductionTaskRegisterDto,
         master: UserEntity,
-    ) {
+    ): Promise<ProductionTaskEntity> {
         const {
             userUuid,
             productionMachineUuid,
@@ -117,5 +120,25 @@ export class ProductionTaskService {
         await this.productionTaskRepository.save(productionTask);
 
         return productionTask;
+    }
+
+    async updateQuantity(user: UserEntity): Promise<UpdateResult> {
+        const productionTask = await this.getTask(user);
+        if (!productionTask) {
+            throw new ProductionTaskNotFoundException();
+        }
+
+        const { id, quantityMade, quantityPlanned } = productionTask;
+        const queryBuilder = await this.productionTaskRepository
+            .createQueryBuilder('productionTask')
+            .update(ProductionTaskEntity)
+            .where('id = :id', { id })
+            .set({ quantityMade: quantityMade + 1 });
+
+        if (quantityMade === quantityPlanned - 1) {
+            queryBuilder.set({ status: true, quantityMade: quantityMade + 1 });
+        }
+
+        return queryBuilder.execute();
     }
 }

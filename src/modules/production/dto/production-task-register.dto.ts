@@ -16,14 +16,14 @@ export class ProductionTaskRegisterDto {
     readonly name: string;
 
     @IsNumber()
-    @IsOptional()
-    @ApiProperty()
-    readonly quantityDone: number;
-
-    @IsNumber()
     @IsNotEmpty()
     @ApiProperty()
     readonly quantityPlanned: number;
+
+    @IsNumber()
+    @IsOptional()
+    @ApiProperty()
+    readonly quantityMade: number;
 
     @IsBoolean()
     @IsOptional()

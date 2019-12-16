@@ -1,17 +1,15 @@
 import { Injectable } from '@nestjs/common';
-import { FindConditions } from 'typeorm';
 import { UserAuthEntity } from '../models/user-auth.entity';
 import { UserAuthRepository } from '../repositories/user-auth.repository';
-import { UserEntity } from '../models/user.entity';
 
 @Injectable()
 export class UserAuthService {
     constructor(public readonly userAuthRepository: UserAuthRepository) {}
 
-    findUser(
+    async findUser(
         options: Partial<{ uuid: string; login: number }>,
     ): Promise<UserAuthEntity> {
-        const queryBuilder = this.userAuthRepository
+        const queryBuilder = await this.userAuthRepository
             .createQueryBuilder('userAuth')
             .leftJoinAndSelect('userAuth.user', 'user');
 
