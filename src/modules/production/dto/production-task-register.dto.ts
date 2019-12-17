@@ -15,18 +15,17 @@ export class ProductionTaskRegisterDto {
     @ApiProperty()
     readonly name: string;
 
-    @IsNumber()
     @IsNotEmpty()
     @ApiProperty()
     readonly quantityPlanned: number;
-
-    @ApiProperty({ type: 'string', format: 'binary' })
-    readonly technicalDrawing: any;
 
     @IsNumber()
     @IsOptional()
     @ApiProperty()
     readonly quantityMade: number;
+
+    @ApiProperty({ format: 'binary' })
+    readonly technicalDrawing: string;
 
     @IsBoolean()
     @IsOptional()

@@ -17,7 +17,7 @@ export class ProductionTaskDto extends AbstractDto {
     @ApiProperty({ default: 0 })
     quantityMade: number;
 
-    @ApiProperty()
+    @ApiProperty({ format: 'binary' })
     technicalDrawing: string;
 
     @ApiProperty({ type: 'boolean' })
@@ -46,6 +46,7 @@ export class ProductionTaskDto extends AbstractDto {
         this.name = productionTask.name;
         this.quantityPlanned = productionTask.quantityPlanned;
         this.quantityMade = productionTask.quantityMade;
+        this.technicalDrawing = productionTask.technicalDrawing;
         this.status = productionTask.status;
         this.duration = productionTask.duration;
         this.createdAt = productionTask.createdAt;
