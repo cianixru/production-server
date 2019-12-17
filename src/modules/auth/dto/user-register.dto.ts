@@ -10,8 +10,8 @@ import {
     IsEnum,
 } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { RoleType } from 'common/constants/role-type';
-import { ContractType } from 'common/constants/contract-type';
+import { RoleType } from '../../../common/constants/role-type';
+import { ContractType } from '../../../common/constants/contract-type';
 
 export class UserRegisterDto {
     @IsString()

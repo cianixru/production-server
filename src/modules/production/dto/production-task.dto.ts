@@ -17,6 +17,9 @@ export class ProductionTaskDto extends AbstractDto {
     @ApiProperty({ default: 0 })
     quantityMade: number;
 
+    @ApiProperty()
+    technicalDrawing: string;
+
     @ApiProperty({ type: 'boolean' })
     status: boolean;
 

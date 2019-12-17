@@ -12,8 +12,14 @@ import {
     Post,
     Body,
     Patch,
+    UploadedFile,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiTags, ApiOkResponse } from '@nestjs/swagger';
+import {
+    ApiBearerAuth,
+    ApiTags,
+    ApiOkResponse,
+    ApiConsumes,
+} from '@nestjs/swagger';
 
 import { RoleType } from '../../../common/constants/role-type';
 import { Roles } from '../../../decorators/roles.decorator';
@@ -23,10 +29,12 @@ import { AuthUserInterceptor } from '../../../interceptors/auth-user-interceptor
 import { ProductionTaskService } from '../services/production-task.service';
 import { ProductionTasksPageDto } from '../dto/production-tasks-page.dto';
 import { ProductionTasksPageOptionsDto } from '../dto/production-tasks-page-options.dto';
-import { AuthUser } from 'decorators/auth-user.decorator';
+import { AuthUser } from '../../../decorators/auth-user.decorator';
 import { ProductionTaskDto } from '../dto/production-task.dto';
 import { ProductionTaskRegisterDto } from '../dto/production-task-register.dto';
-import { UserAuthEntity } from 'modules/user/models/user-auth.entity';
+import { UserAuthEntity } from '../../user/models/user-auth.entity';
+import { IFile } from '../../../shared/interfaces/file.interface';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('production')
 @ApiTags('Production')
@@ -57,14 +65,17 @@ export class ProductionTaskController {
         description: 'Register production task',
         type: ProductionTaskDto,
     })
+    @UseInterceptors(FileInterceptor('technicalDrawing'))
     async productionTaskRegister(
         @Body() productionTaskRegisterDto: ProductionTaskRegisterDto,
         @AuthUser() userAuth: UserAuthEntity,
+        @UploadedFile() file: IFile,
     ): Promise<ProductionTaskDto> {
         const { user } = userAuth;
         const createdProductionTask = await this._productionTaskService.createProductionTask(
             productionTaskRegisterDto,
             user,
+            file,
         );
 
         return createdProductionTask.toDto();

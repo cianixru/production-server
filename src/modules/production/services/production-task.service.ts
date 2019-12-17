@@ -1,21 +1,24 @@
 import { Injectable } from '@nestjs/common';
-import { PageMetaDto } from 'common/dto/page-meta.dto';
+import { FindConditions, UpdateResult } from 'typeorm';
+import { PageMetaDto } from '../../../common/dto/page-meta.dto';
 import { ProductionTaskRepository } from '../repositories/production-task.repository';
 import { ProductionTasksPageOptionsDto } from '../dto/production-tasks-page-options.dto';
 import { ProductionTasksPageDto } from '../dto/production-tasks-page.dto';
 import { UserEntity } from '../../user/models/user.entity';
-import { FindConditions, UpdateResult } from 'typeorm';
-import { ProductionTaskDto } from '../dto/production-task.dto';
 import { ProductionTaskRegisterDto } from '../dto/production-task-register.dto';
 import { UserService } from '../../user/services/user.service';
 import { CustomerService } from '../../customer/services/customer.service';
 import { ProductionMachineService } from './production-machine.service';
-import { UserNotFoundException } from 'exceptions/user-not-found.exception';
-import { CustomerNotFoundException } from 'exceptions/customer-not-found.exception';
-import { ProductionMachineNotFoundException } from 'exceptions/production-machine-not-found.exception';
-import { Order } from 'common/constants/order';
+import { UserNotFoundException } from '../../../exceptions/user-not-found.exception';
+import { CustomerNotFoundException } from '../../../exceptions/customer-not-found.exception';
+import { ProductionMachineNotFoundException } from '../../../exceptions/production-machine-not-found.exception';
+import { Order } from '../../../common/constants/order';
 import { ProductionTaskEntity } from '../models/production-task.entity';
-import { ProductionTaskNotFoundException } from 'exceptions/production-task-not-found.exception';
+import { ProductionTaskNotFoundException } from '../../../exceptions/production-task-not-found.exception';
+import { IFile } from '../../../shared/interfaces/file.interface';
+import { ValidatorService } from '../../../shared/services/validator.service';
+import { AwsS3Service } from '../../../shared/services/aws-s3.service';
+import { FileNotImageException } from '../../../exceptions/file-not-image.exception';
 
 @Injectable()
 export class ProductionTaskService {
@@ -24,6 +27,8 @@ export class ProductionTaskService {
         public readonly productionMachineService: ProductionMachineService,
         public readonly userService: UserService,
         public readonly customerService: CustomerService,
+        public readonly validatorService: ValidatorService,
+        public readonly awsS3Service: AwsS3Service,
     ) {}
 
     async getTask(
@@ -46,7 +51,6 @@ export class ProductionTaskService {
             .orderBy('productionTask.createdAt', Order.ASC)
             .getOne();
 
-        // return productionTask ? productionTask.toDto() : undefined;
         return productionTask || undefined;
     }
 
@@ -82,6 +86,7 @@ export class ProductionTaskService {
     async createProductionTask(
         productionTaskRegisterDto: ProductionTaskRegisterDto,
         master: UserEntity,
+        file: IFile,
     ): Promise<ProductionTaskEntity> {
         const {
             userUuid,
@@ -89,12 +94,22 @@ export class ProductionTaskService {
             customerUuid,
         } = productionTaskRegisterDto;
 
-        const [user, customer, productionMachine] = await Promise.all([
+        if (file && !this.validatorService.isImage(file.mimetype)) {
+            throw new FileNotImageException();
+        }
+
+        const [
+            user,
+            customer,
+            productionMachine,
+            technicalDrawing,
+        ] = await Promise.all([
             this.userService.findUser({ uuid: userUuid }),
             this.customerService.findCustomer({ uuid: customerUuid }),
             this.productionMachineService.findMachine({
                 uuid: productionMachineUuid,
             }),
+            this.awsS3Service.uploadImage(file),
         ]);
 
         if (!user) {
@@ -113,6 +128,7 @@ export class ProductionTaskService {
             user,
             customer,
             productionMachine,
+            technicalDrawing,
         };
         const productionTask = this.productionTaskRepository.create(
             createdTask,

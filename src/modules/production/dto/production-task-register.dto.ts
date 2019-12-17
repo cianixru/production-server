@@ -20,6 +20,9 @@ export class ProductionTaskRegisterDto {
     @ApiProperty()
     readonly quantityPlanned: number;
 
+    @ApiProperty({ type: 'string', format: 'binary' })
+    readonly technicalDrawing: any;
+
     @IsNumber()
     @IsOptional()
     @ApiProperty()

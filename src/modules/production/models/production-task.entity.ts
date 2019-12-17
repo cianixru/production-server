@@ -1,11 +1,4 @@
-import {
-    Entity,
-    Column,
-    JoinColumn,
-    OneToMany,
-    ManyToOne,
-    CreateDateColumn,
-} from 'typeorm';
+import { Entity, Column, ManyToOne, CreateDateColumn } from 'typeorm';
 import { AbstractEntity } from '../../../common/models/abstract.entity';
 import { ProductionTaskDto } from '../dto/production-task.dto';
 import { UserEntity } from '../../user/models/user.entity';
@@ -22,6 +15,9 @@ export class ProductionTaskEntity extends AbstractEntity<ProductionTaskDto> {
 
     @Column({ nullable: false, default: 0 })
     public quantityMade: number;
+
+    @Column({ nullable: true })
+    public technicalDrawing: string;
 
     @Column('boolean', { nullable: false, default: false })
     public status: boolean;
