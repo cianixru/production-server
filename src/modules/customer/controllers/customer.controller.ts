@@ -13,17 +13,18 @@ import {
     Query,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags, ApiOkResponse } from '@nestjs/swagger';
-
 import { RoleType } from '../../../common/constants/role-type';
 import { Roles } from '../../../decorators/roles.decorator';
 import { AuthGuard } from '../../../guards/auth.guard';
 import { RolesGuard } from '../../../guards/roles.guard';
 import { AuthUserInterceptor } from '../../../interceptors/auth-user-interceptor.service';
 import { CustomerService } from '../services/customer.service';
-import { CustomerDto } from '../dto/customer.dto';
-import { CustomerRegisterDto } from '../dto/customer-register.dto';
-import { CustomersPageDto } from '../dto/customers-page.dto';
-import { CustomersPageOptionsDto } from '../dto/customers-page-options.dto';
+import {
+    CustomersPageOptionsDto,
+    CustomersPageDto,
+    CustomerRegisterDto,
+    CustomerDto,
+} from '../dto';
 
 @Controller('customers')
 @ApiTags('Customers')

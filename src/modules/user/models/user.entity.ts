@@ -1,14 +1,7 @@
-import {
-    Entity,
-    Column,
-    CreateDateColumn,
-    OneToOne,
-    OneToMany,
-    JoinColumn,
-} from 'typeorm';
+import { Entity, Column, CreateDateColumn, OneToOne, OneToMany } from 'typeorm';
 
 import { AbstractEntity } from '../../../common/models/abstract.entity';
-import { UserDto } from '../dto/user.dto';
+import { UserDto } from '../dto';
 import { UserAuthEntity } from './user-auth.entity';
 import { UserSalaryEntity } from './user-salary.entity';
 import { ProductionTaskEntity } from '../../production/models/production-task.entity';

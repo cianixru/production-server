@@ -3,8 +3,8 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { AbstractDto } from '../../../common/dto/abstract.dto';
 import { ProductionTaskEntity } from '../models/production-task.entity';
-import { CustomerDto } from '../../customer/dto/customer.dto';
-import { UserDto } from '../../user/dto/user.dto';
+import { CustomerDto } from '../../customer/dto';
+import { UserDto } from '../../user/dto';
 import { ProductionMachineDto } from './production-machine.dto';
 
 export class ProductionTaskDto extends AbstractDto {

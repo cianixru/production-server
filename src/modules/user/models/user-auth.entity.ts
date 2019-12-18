@@ -11,7 +11,6 @@ import { RoleType } from '../../../common/constants/role-type';
 import { UserAuthDto } from '../dto/user-auth.dto';
 import { PasswordTransformer } from '../utils/password.transformer';
 import { UserEntity } from './user.entity';
-import { IUserAuth } from '../interfaces/user-auth.interface';
 
 @Entity({ name: 'users_auth' })
 export class UserAuthEntity extends AbstractEntity<UserAuthDto> {

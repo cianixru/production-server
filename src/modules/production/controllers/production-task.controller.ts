@@ -14,27 +14,22 @@ import {
     Patch,
     UploadedFile,
 } from '@nestjs/common';
-import {
-    ApiBearerAuth,
-    ApiTags,
-    ApiOkResponse,
-    ApiConsumes,
-} from '@nestjs/swagger';
-
+import { ApiBearerAuth, ApiTags, ApiOkResponse } from '@nestjs/swagger';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { RoleType } from '../../../common/constants/role-type';
 import { Roles } from '../../../decorators/roles.decorator';
-import { AuthGuard } from '../../../guards/auth.guard';
-import { RolesGuard } from '../../../guards/roles.guard';
+import { AuthGuard, RolesGuard } from '../../../guards';
 import { AuthUserInterceptor } from '../../../interceptors/auth-user-interceptor.service';
 import { ProductionTaskService } from '../services/production-task.service';
-import { ProductionTasksPageDto } from '../dto/production-tasks-page.dto';
-import { ProductionTasksPageOptionsDto } from '../dto/production-tasks-page-options.dto';
 import { AuthUser } from '../../../decorators/auth-user.decorator';
-import { ProductionTaskDto } from '../dto/production-task.dto';
-import { ProductionTaskRegisterDto } from '../dto/production-task-register.dto';
 import { UserAuthEntity } from '../../user/models/user-auth.entity';
 import { IFile } from '../../../shared/interfaces/file.interface';
-import { FileInterceptor } from '@nestjs/platform-express';
+import {
+    ProductionTaskDto,
+    ProductionTaskRegisterDto,
+    ProductionTasksPageOptionsDto,
+    ProductionTasksPageDto,
+} from '../dto';
 
 @Controller('production')
 @ApiTags('Production')

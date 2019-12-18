@@ -8,20 +8,20 @@ import {
     UseGuards,
     Patch,
 } from '@nestjs/common';
+import { UpdateResult } from 'typeorm';
 import { ApiOkResponse, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
-
 import { AuthUser } from '../../../decorators/auth-user.decorator';
 import { AuthGuard } from '../../../guards/auth.guard';
 import { AuthUserInterceptor } from '../../../interceptors/auth-user-interceptor.service';
-import { UserEntity } from '../../user/models/user.entity';
+import { UserAuthEntity } from '../../user/models/user-auth.entity';
 import { UserService } from '../../user/services/user.service';
 import { AuthService } from '../services/auth.service';
-import { LoginPayloadDto } from '../dto/login-payload.dto';
-import { UserLoginDto } from '../dto/user-login.dto';
-import { UserRegisterDto } from '../dto/user-register.dto';
-import { RegisterPayloadDto } from '../dto/register-payload.dto';
-import { UpdateResult } from 'typeorm';
-import { UserAuthEntity } from 'modules/user/models/user-auth.entity';
+import {
+    RegisterPayloadDto,
+    UserRegisterDto,
+    UserLoginDto,
+    LoginPayloadDto,
+} from '../dto';
 
 @Controller('auth')
 @ApiTags('Auth')

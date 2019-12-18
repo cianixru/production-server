@@ -1,19 +1,18 @@
 import { Injectable } from '@nestjs/common';
+import { PageMetaDto } from '../../../common/dto/page-meta.dto';
+import { FindConditions } from 'typeorm';
 import { CustomerRepository } from '../repositories/customer.repository';
 import { CustomerEntity } from '../models/customer.entity';
-import { CustomerRegisterDto } from '../dto/customer-register.dto';
-import { CustomersPageOptionsDto } from '../dto/customers-page-options.dto';
-import { CustomersPageDto } from '../dto/customers-page.dto';
-import { PageMetaDto } from 'common/dto/page-meta.dto';
-import { FindConditions } from 'typeorm';
+import {
+    CustomersPageDto,
+    CustomersPageOptionsDto,
+    CustomerRegisterDto,
+} from '../dto';
 
 @Injectable()
 export class CustomerService {
     constructor(public readonly customerRepository: CustomerRepository) {}
 
-    /**
-     * Find single customer
-     */
     findCustomer(
         findData: FindConditions<CustomerEntity>,
     ): Promise<CustomerEntity> {
@@ -43,6 +42,7 @@ export class CustomerService {
             pageOptionsDto,
             itemCount: customersCount,
         });
+
         return new CustomersPageDto(customers.toDtos(), pageMetaDto);
     }
 }

@@ -1,19 +1,20 @@
 import { Injectable } from '@nestjs/common';
 import { FindConditions, UpdateResult } from 'typeorm';
-import { UserEntity } from '../models/user.entity';
-import { UserRegisterDto } from '../../auth/dto/user-register.dto';
-import { UserRepository } from '../repositories/user.repository';
-import { UsersPageOptionsDto } from '../dto/users-page-options.dto';
+import { UserRegisterDto } from '../../auth/dto';
 import { PageMetaDto } from '../../../common/dto/page-meta.dto';
-import { UsersPageDto } from '../dto/users-page.dto';
-import { UserAuthRepository } from '../repositories/user-auth.repository';
-import { UserSalaryRepository } from '../repositories/user-salary.repository';
+import { UsersPageDto, UsersPageOptionsDto } from '../dto';
+import {
+    UserRepository,
+    UserAuthRepository,
+    UserSalaryRepository,
+} from '../repositories';
 import { format } from 'date-fns';
-import { UserAuthEntity } from '../models/user-auth.entity';
-import { UserSalaryEntity } from '../models/user-salary.entity';
+import { UserEntity, UserAuthEntity, UserSalaryEntity } from '../models';
 
 @Injectable()
 export class UserService {
+    dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSxxx";
+
     constructor(
         public readonly userRepository: UserRepository,
         public readonly userAuthRepository: UserAuthRepository,
@@ -69,7 +70,7 @@ export class UserService {
         const queryBuilder = await this.userRepository
             .createQueryBuilder('user')
             .update(UserEntity)
-            .set({ lastLogin: format(today) })
+            .set({ lastLogin: format(today, this.dateFormat) })
             .where('id = :id', { id });
 
         return queryBuilder.execute();
@@ -82,7 +83,7 @@ export class UserService {
         const queryBuilder = await this.userRepository
             .createQueryBuilder('user')
             .update(UserEntity)
-            .set({ lastLogout: format(today) })
+            .set({ lastLogout: format(today, this.dateFormat) })
             .where('id = :id', { id });
 
         return queryBuilder.execute();

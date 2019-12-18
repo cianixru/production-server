@@ -3,11 +3,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { AbstractDto } from '../../../common/dto/abstract.dto';
 import { UserEntity } from '../models/user.entity';
-import { UserAuthDto } from './user-auth.dto';
-import { UserSalaryDto } from './user-salary.dto';
-import { IUser } from '../interfaces/user.interface';
-import { UserAuthEntity } from '../models/user-auth.entity';
-import { UserSalaryEntity } from '../models/user-salary.entity';
 
 export class UserDto extends AbstractDto {
     @ApiProperty()

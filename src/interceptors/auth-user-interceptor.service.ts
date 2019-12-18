@@ -8,7 +8,6 @@ import {
 
 import { UserAuthEntity } from '../modules/user/models/user-auth.entity';
 import { AuthService } from '../modules/auth/services/auth.service';
-import { UserEntity } from '../modules/user/models/user.entity';
 
 @Injectable()
 export class AuthUserInterceptor implements NestInterceptor {
