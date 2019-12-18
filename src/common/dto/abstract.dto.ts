@@ -1,11 +1,11 @@
 'use strict';
 
-import { IAbstract } from '../interfaces/abstract.interface';
+import { AbstractEntity } from '../models/abstract.entity';
 
 export class AbstractDto {
     uuid: string;
 
-    constructor(abstract: IAbstract) {
+    constructor(abstract: AbstractEntity) {
         this.uuid = abstract.uuid;
     }
 }

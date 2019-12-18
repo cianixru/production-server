@@ -4,10 +4,8 @@ import { PrimaryGeneratedColumn, Column, Generated } from 'typeorm';
 
 import { UtilsService } from '../../providers/services/utils.service';
 import { AbstractDto } from '../dto/abstract.dto';
-import { IAbstract } from '../interfaces/abstract.interface';
 
-export abstract class AbstractEntity<T extends AbstractDto = AbstractDto>
-    implements IAbstract {
+export abstract class AbstractEntity<T extends AbstractDto = AbstractDto> {
     @PrimaryGeneratedColumn('increment')
     id: number;
 
