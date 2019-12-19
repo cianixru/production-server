@@ -9,7 +9,7 @@ import { UserModule } from './modules/user/modules/user.module';
 import { CustomerModule } from './modules/customer/modules/customer.module';
 import { ConfigService } from './shared/services/config.service';
 import { SharedModule } from './shared/modules/shared.module';
-import { ProductionModule } from 'modules/production/modules/production.module';
+import { ProductionModule } from './modules/production/modules/production.module';
 
 @Module({
     imports: [

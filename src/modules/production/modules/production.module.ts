@@ -7,10 +7,8 @@ import { ProductionMachineController } from '../controllers/production-machine.c
 import { ProductionMachineService } from '../services/production-machine.service';
 import { ProductionTaskService } from '../services/production-task.service';
 import { ProductionTaskController } from '../controllers/production-task.controller';
-import { UserService } from '../../user/services/user.service';
-import { CustomerService } from '../../customer/services/customer.service';
-import { UserModule } from 'modules/user/modules/user.module';
-import { CustomerModule } from 'modules/customer/modules/customer.module';
+import { UserModule } from '../../../modules/user/modules/user.module';
+import { CustomerModule } from '../../../modules/customer/modules/customer.module';
 
 @Module({
     imports: [
