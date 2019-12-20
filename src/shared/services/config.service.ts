@@ -57,6 +57,7 @@ export class ConfigService {
                 return migration;
             });
         }
+
         return {
             entities,
             migrations,
@@ -67,6 +68,8 @@ export class ConfigService {
             username: this.get('POSTGRES_USERNAME'),
             password: this.get('POSTGRES_PASSWORD'),
             database: this.get('POSTGRES_DATABASE'),
+            synchronize: this.get('NODE_ENV') === 'test',
+            dropSchema: this.get('NODE_ENV') === 'test',
             migrationsRun: true,
             logging: this.nodeEnv === 'development',
             namingStrategy: new SnakeNamingStrategy(),

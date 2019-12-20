@@ -4,7 +4,7 @@ import { INestApplication } from '@nestjs/common';
 export function setupSwagger(app: INestApplication) {
     const options = new DocumentBuilder()
         .setTitle('Production')
-        .setVersion('0.0.1')
+        .setVersion('1.0.0')
         .addBearerAuth()
         .build();
 
