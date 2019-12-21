@@ -63,8 +63,10 @@ export class UserService {
         return new UsersPageDto(users.toDtos(), pageMetaDto);
     }
 
-    async setLastLoginDate(user: UserEntity): Promise<UpdateResult> {
-        const { id } = user;
+    async setLastLoginDate(userAuth: UserAuthEntity): Promise<UpdateResult> {
+        const {
+            user: { id },
+        } = userAuth;
         const today = new Date();
 
         const queryBuilder = await this.userRepository

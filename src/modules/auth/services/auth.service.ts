@@ -24,16 +24,19 @@ export class AuthService {
         public readonly userAuthService: UserAuthService,
     ) {}
 
-    async createToken(user: UserEntity): Promise<TokenPayloadDto> {
-        const { uuid } = user;
+    async createToken(userAuth: UserAuthEntity): Promise<TokenPayloadDto> {
+        const {
+            user: { uuid },
+            role,
+        } = userAuth;
 
         return new TokenPayloadDto({
             expiresIn: this.configService.getNumber('JWT_EXPIRATION_TIME'),
-            accessToken: await this.jwtService.signAsync({ uuid }),
+            accessToken: await this.jwtService.signAsync({ uuid, role }),
         });
     }
 
-    async validateUser(userLoginDto: UserLoginDto): Promise<UserEntity> {
+    async validateUser(userLoginDto: UserLoginDto): Promise<UserAuthEntity> {
         const { login, password } = userLoginDto;
         const userAuth = await this.userAuthService.findUser({ login });
 
@@ -50,7 +53,7 @@ export class AuthService {
             throw new UserPasswordNotValidException();
         }
 
-        return userAuth.user;
+        return userAuth;
     }
 
     static setAuthUser(userAuth: UserAuthEntity) {
