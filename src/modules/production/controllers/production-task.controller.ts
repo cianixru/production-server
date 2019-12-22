@@ -96,11 +96,12 @@ export class ProductionTaskController {
     @Roles(RoleType.Worker)
     @HttpCode(HttpStatus.OK)
     @ApiOkResponse({
-        type: ProductionTaskDto,
         description: 'Update task quantity',
     })
-    updateTaskQuantity(@AuthUser() userAuth: UserAuthEntity) {
+    async updateTaskQuantity(
+        @AuthUser() userAuth: UserAuthEntity,
+    ): Promise<void> {
         const { user } = userAuth;
-        return this._productionTaskService.updateQuantity(user);
+        await this._productionTaskService.updateQuantity(user);
     }
 }

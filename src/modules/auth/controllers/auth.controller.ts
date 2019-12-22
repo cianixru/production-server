@@ -82,8 +82,8 @@ export class AuthController {
     @ApiOkResponse({
         description: 'Successfully logout',
     })
-    userLogout(@AuthUser() userAuth: UserAuthEntity): Promise<UpdateResult> {
+    async userLogout(@AuthUser() userAuth: UserAuthEntity): Promise<void> {
         const { user } = userAuth;
-        return this.userService.setLastLogoutDate(user);
+        await this.userService.setLastLogoutDate(user);
     }
 }
