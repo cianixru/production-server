@@ -75,7 +75,7 @@ export class AuthController {
     }
 
     @Patch('logout')
-    @HttpCode(HttpStatus.OK)
+    @HttpCode(HttpStatus.NO_CONTENT)
     @UseGuards(AuthGuard)
     @UseInterceptors(AuthUserInterceptor)
     @ApiBearerAuth()

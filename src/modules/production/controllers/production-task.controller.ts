@@ -94,7 +94,7 @@ export class ProductionTaskController {
 
     @Patch('task')
     @Roles(RoleType.Worker)
-    @HttpCode(HttpStatus.OK)
+    @HttpCode(HttpStatus.NO_CONTENT)
     @ApiOkResponse({
         description: 'Update task quantity',
     })
