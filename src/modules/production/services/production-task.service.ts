@@ -54,6 +54,8 @@ export class ProductionTaskService {
             .orderBy('productionTask.createdAt', Order.ASC)
             .getOne();
 
+        await this.awsS3Service.downloadImage(productionTask.technicalDrawing);
+
         return productionTask || undefined;
     }
 
