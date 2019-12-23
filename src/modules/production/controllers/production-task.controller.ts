@@ -99,14 +99,17 @@ export class ProductionTaskController {
 
     @Patch('task')
     @Roles(RoleType.Worker)
-    @HttpCode(HttpStatus.NO_CONTENT)
-    @ApiNoContentResponse({
+    @HttpCode(HttpStatus.OK)
+    @ApiOkResponse({
+        type: ProductionTaskDto,
         description: 'Update task quantity',
     })
     async updateTaskQuantity(
         @AuthUser() userAuth: UserAuthEntity,
-    ): Promise<void> {
+    ): Promise<ProductionTaskDto | undefined> {
         const { user } = userAuth;
         await this._productionTaskService.updateQuantity(user);
+
+        return this.getProductionTask(userAuth);
     }
 }
