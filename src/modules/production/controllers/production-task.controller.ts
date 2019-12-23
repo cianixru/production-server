@@ -14,7 +14,12 @@ import {
     Patch,
     UploadedFile,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiTags, ApiOkResponse } from '@nestjs/swagger';
+import {
+    ApiBearerAuth,
+    ApiTags,
+    ApiOkResponse,
+    ApiNoContentResponse,
+} from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { RoleType } from '../../../common/constants/role-type';
 import { Roles } from '../../../decorators/roles.decorator';
@@ -95,7 +100,7 @@ export class ProductionTaskController {
     @Patch('task')
     @Roles(RoleType.Worker)
     @HttpCode(HttpStatus.NO_CONTENT)
-    @ApiOkResponse({
+    @ApiNoContentResponse({
         description: 'Update task quantity',
     })
     async updateTaskQuantity(

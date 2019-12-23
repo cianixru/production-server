@@ -8,8 +8,12 @@ import {
     UseGuards,
     Patch,
 } from '@nestjs/common';
-import { UpdateResult } from 'typeorm';
-import { ApiOkResponse, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
+import {
+    ApiOkResponse,
+    ApiTags,
+    ApiBearerAuth,
+    ApiNoContentResponse,
+} from '@nestjs/swagger';
 import { AuthUser } from '../../../decorators/auth-user.decorator';
 import { AuthGuard } from '../../../guards/auth.guard';
 import { AuthUserInterceptor } from '../../../interceptors/auth-user-interceptor.service';
@@ -79,7 +83,7 @@ export class AuthController {
     @UseGuards(AuthGuard)
     @UseInterceptors(AuthUserInterceptor)
     @ApiBearerAuth()
-    @ApiOkResponse({
+    @ApiNoContentResponse({
         description: 'Successfully logout',
     })
     async userLogout(@AuthUser() userAuth: UserAuthEntity): Promise<void> {
