@@ -14,12 +14,7 @@ import {
     Patch,
     UploadedFile,
 } from '@nestjs/common';
-import {
-    ApiBearerAuth,
-    ApiTags,
-    ApiOkResponse,
-    ApiNoContentResponse,
-} from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags, ApiOkResponse } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { RoleType } from '../../../common/constants/role-type';
 import { Roles } from '../../../decorators/roles.decorator';
@@ -36,7 +31,7 @@ import {
     ProductionTasksPageOptionsDto,
     ProductionTasksPageDto,
 } from '../dto';
-import { ProductionTaskNotFoundException } from 'exceptions';
+import { ProductionTaskNotFoundException } from '../../../exceptions';
 
 @Controller('production')
 @ApiTags('Production')

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-import { FindConditions, UpdateResult } from 'typeorm';
+import { UpdateResult } from 'typeorm';
 import { PageMetaDto } from '../../../common/dto/page-meta.dto';
 import { ProductionTaskRepository } from '../repositories/production-task.repository';
 import { ProductionTasksPageOptionsDto } from '../dto/production-tasks-page-options.dto';
