@@ -31,6 +31,7 @@ import { UserAuthEntity } from '../../user/models/user-auth.entity';
 import { IFile } from '../../../shared/interfaces/file.interface';
 import {
     ProductionTaskDto,
+    ProductionTaskUpdateDto,
     ProductionTaskRegisterDto,
     ProductionTasksPageOptionsDto,
     ProductionTasksPageDto,
@@ -92,9 +93,11 @@ export class ProductionTaskController {
         @AuthUser() userAuth: UserAuthEntity,
     ): Promise<ProductionTaskDto | undefined> {
         const { user } = userAuth;
-        const productionTask = await this._productionTaskService.getTask(user);
+        const productionTask = await this._productionTaskService.getTask({
+            user,
+        });
 
-        return productionTask.toDto() || undefined;
+        return productionTask ? productionTask.toDto() : undefined;
     }
 
     @Patch('task')
@@ -105,11 +108,14 @@ export class ProductionTaskController {
         description: 'Update task quantity',
     })
     async updateTaskQuantity(
-        @AuthUser() userAuth: UserAuthEntity,
-    ): Promise<ProductionTaskDto | undefined> {
-        const { user } = userAuth;
-        await this._productionTaskService.updateQuantity(user);
+        @Body() productionTaskUpdateDto: ProductionTaskUpdateDto,
+    ): Promise<ProductionTaskDto> {
+        const { uuid } = productionTaskUpdateDto;
+        await this._productionTaskService.updateQuantity(uuid);
 
-        return this.getProductionTask(userAuth);
+        const productionTask = await this._productionTaskService.getTask({
+            uuid,
+        });
+        return productionTask.toDto();
     }
 }

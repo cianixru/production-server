@@ -35,9 +35,8 @@ export class ProductionTaskService {
     ) {}
 
     async getTask(
-        user: FindConditions<UserEntity>,
+        options: Partial<{ user: UserEntity; uuid: string }>,
     ): Promise<ProductionTaskEntity | undefined> {
-        const { id } = user;
         const queryBuilder = this.productionTaskRepository.createQueryBuilder(
             'productionTask',
         );
@@ -49,14 +48,23 @@ export class ProductionTaskService {
                 'productionTask.productionMachine',
                 'productionMachine',
             )
-            .where('user.id = :id', { id })
-            .andWhere('productionTask.status = :status', { status: false })
-            .orderBy('productionTask.createdAt', Order.ASC)
-            .getOne();
+            .orderBy('productionTask.createdAt', Order.ASC);
 
-        await this.awsS3Service.downloadImage(productionTask.technicalDrawing);
+        if (options.user) {
+            queryBuilder
+                .orWhere('user.id = :id', { id: options.user.id })
+                .andWhere('productionTask.status = :status', {
+                    status: false,
+                });
+        }
 
-        return productionTask || undefined;
+        if (options.uuid) {
+            queryBuilder.orWhere('productionTask.uuid = :uuid', {
+                uuid: options.uuid,
+            });
+        }
+
+        return productionTask.getOne() || undefined;
     }
 
     async getTasks(
@@ -143,8 +151,8 @@ export class ProductionTaskService {
         return productionTask;
     }
 
-    async updateQuantity(user: UserEntity): Promise<UpdateResult> {
-        const productionTask = await this.getTask(user);
+    async updateQuantity(uuid: string): Promise<UpdateResult> {
+        const productionTask = await this.getTask({ uuid });
         if (!productionTask) {
             throw new ProductionTaskNotFoundException();
         }

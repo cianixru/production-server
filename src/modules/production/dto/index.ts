@@ -6,3 +6,4 @@ export * from './production-task-register.dto';
 export * from './production-task.dto';
 export * from './production-tasks-page-options.dto';
 export * from './production-tasks-page.dto';
+export * from './production-task-update.dto';

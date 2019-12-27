@@ -26,8 +26,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
         const userAuth = await this.userAuthService.findUser({ uuid });
 
-        //todo: remove relations and przenies z user-auth.service
-
         if (!userAuth) {
             throw new UnauthorizedException();
         }
