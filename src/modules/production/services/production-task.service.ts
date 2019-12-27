@@ -36,7 +36,7 @@ export class ProductionTaskService {
 
     async getTask(
         options: Partial<{ user: UserEntity; uuid: string }>,
-    ): Promise<ProductionTaskEntity | undefined> {
+    ): Promise<ProductionTaskEntity> {
         const queryBuilder = this.productionTaskRepository.createQueryBuilder(
             'productionTask',
         );
@@ -64,7 +64,7 @@ export class ProductionTaskService {
             });
         }
 
-        return productionTask.getOne() || undefined;
+        return productionTask.getOne();
     }
 
     async getTasks(

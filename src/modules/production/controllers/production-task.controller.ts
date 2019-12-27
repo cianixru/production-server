@@ -36,6 +36,7 @@ import {
     ProductionTasksPageOptionsDto,
     ProductionTasksPageDto,
 } from '../dto';
+import { ProductionTaskNotFoundException } from 'exceptions';
 
 @Controller('production')
 @ApiTags('Production')
@@ -91,13 +92,17 @@ export class ProductionTaskController {
     })
     async getProductionTask(
         @AuthUser() userAuth: UserAuthEntity,
-    ): Promise<ProductionTaskDto | undefined> {
+    ): Promise<ProductionTaskDto | any> {
         const { user } = userAuth;
         const productionTask = await this._productionTaskService.getTask({
             user,
         });
 
-        return productionTask ? productionTask.toDto() : undefined;
+        if (!productionTask) {
+            throw new ProductionTaskNotFoundException();
+        }
+
+        return productionTask.toDto();
     }
 
     @Patch('task')
