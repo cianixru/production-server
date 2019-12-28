@@ -9,6 +9,7 @@ import { ProductionTaskService } from '../services/production-task.service';
 import { ProductionTaskController } from '../controllers/production-task.controller';
 import { UserModule } from '../../../modules/user/modules/user.module';
 import { CustomerModule } from '../../../modules/customer/modules/customer.module';
+import { ProductionGateway } from '../gateway/production.gateway';
 
 @Module({
     imports: [
@@ -22,6 +23,10 @@ import { CustomerModule } from '../../../modules/customer/modules/customer.modul
     ],
     controllers: [ProductionMachineController, ProductionTaskController],
     exports: [ProductionMachineService, ProductionTaskService],
-    providers: [ProductionMachineService, ProductionTaskService],
+    providers: [
+        ProductionMachineService,
+        ProductionTaskService,
+        ProductionGateway,
+    ],
 })
 export class ProductionModule {}
