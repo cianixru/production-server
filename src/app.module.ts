@@ -10,6 +10,7 @@ import { CustomerModule } from './modules/customer/modules/customer.module';
 import { ConfigService } from './shared/services/config.service';
 import { SharedModule } from './shared/modules/shared.module';
 import { ProductionModule } from './modules/production/modules/production.module';
+import { EventsModule } from './modules/events/events.module';
 
 @Module({
     imports: [
@@ -17,6 +18,7 @@ import { ProductionModule } from './modules/production/modules/production.module
         UserModule,
         CustomerModule,
         ProductionModule,
+        EventsModule,
         TypeOrmModule.forRootAsync({
             imports: [SharedModule],
             useFactory: (configService: ConfigService) =>
