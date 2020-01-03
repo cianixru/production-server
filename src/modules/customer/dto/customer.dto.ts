@@ -25,10 +25,10 @@ export class CustomerDto extends AbstractDto {
     state: string;
 
     @ApiProperty()
-    zip: string;
+    zipCode: string;
 
     @ApiProperty()
-    tax: string;
+    taxNumber: string;
 
     @ApiProperty({ format: 'date' })
     createdAt: string;
@@ -41,8 +41,8 @@ export class CustomerDto extends AbstractDto {
         this.street = customer.street;
         this.city = customer.city;
         this.state = customer.state;
-        this.zip = customer.zip;
-        this.tax = customer.tax;
+        this.zipCode = customer.zipCode;
+        this.taxNumber = customer.taxNumber;
         this.createdAt = customer.createdAt;
     }
 }

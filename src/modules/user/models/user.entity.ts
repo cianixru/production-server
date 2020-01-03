@@ -30,7 +30,7 @@ export class UserEntity extends AbstractEntity<UserDto> {
     public state: string;
 
     @Column({ nullable: false })
-    public zip: string;
+    public zipCode: string;
 
     @CreateDateColumn({ type: 'date' })
     public createdAt: string;

@@ -27,7 +27,7 @@ export class UserDto extends AbstractDto {
     state: string;
 
     @ApiProperty()
-    zip: string;
+    zipCode: string;
 
     @ApiProperty({ format: 'date' })
     createdAt: string;
@@ -47,7 +47,7 @@ export class UserDto extends AbstractDto {
         this.street = user.street;
         this.city = user.city;
         this.state = user.state;
-        this.zip = user.zip;
+        this.zipCode = user.zipCode;
         this.createdAt = user.createdAt;
         this.lastLogin = user.lastLogin;
         this.lastLogout = user.lastLogout;

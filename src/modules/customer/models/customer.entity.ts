@@ -25,10 +25,10 @@ export class CustomerEntity extends AbstractEntity<CustomerDto> {
     public state: string;
 
     @Column({ nullable: false })
-    public zip: string;
+    public zipCode: string;
 
     @Column({ nullable: false })
-    public tax: string;
+    public taxNumber: string;
 
     @CreateDateColumn({ type: 'date' })
     public createdAt: string;
