@@ -40,7 +40,7 @@ export class ProductionTaskDto extends AbstractDto {
     productionMachine: ProductionMachineDto;
 
     @ApiProperty({ type: ProductionDocumentationDto })
-    productionDocumentation: string;
+    productionDocumentation: ProductionDocumentationDto;
 
     constructor(productionTask: ProductionTaskEntity) {
         super(productionTask);

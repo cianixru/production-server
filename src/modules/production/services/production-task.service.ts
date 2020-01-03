@@ -50,6 +50,10 @@ export class ProductionTaskService {
                 'productionTask.productionMachine',
                 'productionMachine',
             )
+            .leftJoinAndSelect(
+                'productionTask.productionDocumentation',
+                'productionDocumentation',
+            )
             .orderBy('productionTask.createdAt', Order.ASC);
 
         if (options.user) {
@@ -82,6 +86,10 @@ export class ProductionTaskService {
             .leftJoinAndSelect(
                 'productionTask.productionMachine',
                 'productionMachine',
+            )
+            .leftJoinAndSelect(
+                'productionTask.productionDocumentation',
+                'productionDocumentation',
             )
             .skip(pageOptionsDto.skip)
             .take(pageOptionsDto.take)
