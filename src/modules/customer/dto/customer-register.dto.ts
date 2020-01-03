@@ -38,10 +38,10 @@ export class CustomerRegisterDto {
     @IsString()
     @IsNotEmpty()
     @ApiProperty()
-    readonly zip: string;
+    readonly zipCode: string;
 
     @IsString()
     @IsNotEmpty()
     @ApiProperty()
-    readonly tax: string;
+    readonly taxNumber: string;
 }

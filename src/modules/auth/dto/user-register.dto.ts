@@ -53,7 +53,7 @@ export class UserRegisterDto {
     @IsString()
     @IsNotEmpty()
     @ApiProperty()
-    readonly zip: string;
+    readonly zipCode: string;
 
     @IsEnum(RoleType)
     @IsOptional()
