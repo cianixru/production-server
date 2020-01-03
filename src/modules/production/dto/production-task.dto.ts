@@ -6,6 +6,7 @@ import { ProductionTaskEntity } from '../models/production-task.entity';
 import { CustomerDto } from '../../customer/dto';
 import { UserDto } from '../../user/dto';
 import { ProductionMachineDto } from './production-machine.dto';
+import { ProductionDocumentationDto } from './production-documentation.dto';
 
 export class ProductionTaskDto extends AbstractDto {
     @ApiProperty()
@@ -16,9 +17,6 @@ export class ProductionTaskDto extends AbstractDto {
 
     @ApiProperty({ default: 0 })
     quantityMade: number;
-
-    @ApiProperty({ format: 'binary' })
-    technicalDrawing: string;
 
     @ApiProperty({ type: 'boolean' })
     status: boolean;
@@ -41,12 +39,14 @@ export class ProductionTaskDto extends AbstractDto {
     @ApiProperty({ type: ProductionMachineDto })
     productionMachine: ProductionMachineDto;
 
+    @ApiProperty({ type: ProductionDocumentationDto })
+    productionDocumentation: string;
+
     constructor(productionTask: ProductionTaskEntity) {
         super(productionTask);
         this.name = productionTask.name;
         this.quantityPlanned = productionTask.quantityPlanned;
         this.quantityMade = productionTask.quantityMade;
-        this.technicalDrawing = productionTask.technicalDrawing;
         this.status = productionTask.status;
         this.duration = productionTask.duration;
         this.createdAt = productionTask.createdAt;
@@ -54,5 +54,6 @@ export class ProductionTaskDto extends AbstractDto {
         this.user = productionTask.user.toDto();
         this.master = productionTask.master.toDto();
         this.productionMachine = productionTask.productionMachine.toDto();
+        this.productionDocumentation = productionTask.productionDocumentation.toDto();
     }
 }

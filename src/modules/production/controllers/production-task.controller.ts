@@ -62,13 +62,14 @@ export class ProductionTaskController {
         description: 'Register production task',
         type: ProductionTaskDto,
     })
-    @UseInterceptors(FileInterceptor('technicalDrawing'))
+    @UseInterceptors(FileInterceptor('productionDocumentation'))
     async productionTaskRegister(
         @Body() productionTaskRegisterDto: ProductionTaskRegisterDto,
         @AuthUser() userAuth: UserAuthEntity,
         @UploadedFile() file: IFile,
     ): Promise<ProductionTaskDto> {
         const { user } = userAuth;
+
         const createdProductionTask = await this._productionTaskService.createProductionTask(
             productionTaskRegisterDto,
             user,

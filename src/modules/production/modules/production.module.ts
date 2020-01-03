@@ -10,6 +10,7 @@ import { ProductionTaskController } from '../controllers/production-task.control
 import { UserModule } from '../../../modules/user/modules/user.module';
 import { CustomerModule } from '../../../modules/customer/modules/customer.module';
 import { ProductionGateway } from '../gateway/production.gateway';
+import { ProductionDocumentationRepository } from '../repositories/production-documentations.repository';
 
 @Module({
     imports: [
@@ -17,6 +18,7 @@ import { ProductionGateway } from '../gateway/production.gateway';
         TypeOrmModule.forFeature([
             ProductionTaskRepository,
             ProductionMachineRepository,
+            ProductionDocumentationRepository,
         ]),
         UserModule,
         CustomerModule,

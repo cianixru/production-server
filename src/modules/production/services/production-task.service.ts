@@ -22,11 +22,13 @@ import {
     ProductionMachineNotFoundException,
     ProductionTaskNotFoundException,
 } from '../../../exceptions';
+import { ProductionDocumentationRepository } from '../repositories/production-documentations.repository';
 
 @Injectable()
 export class ProductionTaskService {
     constructor(
         public readonly productionTaskRepository: ProductionTaskRepository,
+        public readonly productionDocumentationRepository: ProductionDocumentationRepository,
         public readonly productionMachineService: ProductionMachineService,
         public readonly userService: UserService,
         public readonly customerService: CustomerService,
@@ -135,13 +137,21 @@ export class ProductionTaskService {
             throw new ProductionMachineNotFoundException();
         }
 
+        const createdDocumentation = { name: technicalDrawing };
+        const productionDocumentation = this.productionDocumentationRepository.create(
+            createdDocumentation,
+        );
+        await this.productionDocumentationRepository.save(
+            productionDocumentation,
+        );
+
         const createdTask = {
             ...productionTaskRegisterDto,
             master,
             user,
             customer,
             productionMachine,
-            technicalDrawing,
+            productionDocumentation,
         };
         const productionTask = this.productionTaskRepository.create(
             createdTask,

@@ -24,9 +24,6 @@ export class ProductionTaskRegisterDto {
     @ApiProperty()
     readonly quantityMade: number;
 
-    @ApiProperty({ format: 'binary' })
-    readonly technicalDrawing: string;
-
     @IsBoolean()
     @IsOptional()
     @ApiProperty()
@@ -46,6 +43,9 @@ export class ProductionTaskRegisterDto {
     @IsNotEmpty()
     @ApiProperty()
     readonly productionMachineUuid: string;
+
+    @ApiProperty({ format: 'binary' })
+    readonly productionDocumentation: string;
 
     @IsString()
     @IsNotEmpty()

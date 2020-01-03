@@ -4,6 +4,7 @@ import { ProductionTaskDto } from '../dto/production-task.dto';
 import { UserEntity } from '../../user/models/user.entity';
 import { CustomerEntity } from '../../customer/models/customer.entity';
 import { ProductionMachineEntity } from './production-machine.entity';
+import { ProductionDocumentationEntity } from './production-documentation.entity';
 
 @Entity({ name: 'production_tasks' })
 export class ProductionTaskEntity extends AbstractEntity<ProductionTaskDto> {
@@ -15,9 +16,6 @@ export class ProductionTaskEntity extends AbstractEntity<ProductionTaskDto> {
 
     @Column({ nullable: false, default: 0 })
     public quantityMade: number;
-
-    @Column({ nullable: false })
-    public technicalDrawing: string;
 
     @Column('boolean', { nullable: false, default: false })
     public status: boolean;
@@ -56,6 +54,14 @@ export class ProductionTaskEntity extends AbstractEntity<ProductionTaskDto> {
         { nullable: false },
     )
     public productionMachine: ProductionMachineEntity;
+
+    @ManyToOne(
+        () => ProductionDocumentationEntity,
+        (productionDocumentation: ProductionDocumentationEntity) =>
+            productionDocumentation.productionTask,
+        { nullable: false },
+    )
+    public productionDocumentation: ProductionDocumentationEntity;
 
     dtoClass = ProductionTaskDto;
 }
