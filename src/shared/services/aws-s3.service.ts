@@ -42,23 +42,4 @@ export class AwsS3Service {
 
         return key;
     }
-
-    // async downloadImage(key: string) {
-    // const url = await this._s3.getSignedUrl('getObject', {
-    //     Bucket: this.configService.awsS3Config.bucketName,
-    //     Key: key,
-    //     Expires: 60 * 5,
-    // });
-
-    // return url;
-
-    //     const obj = await this._s3
-    //         .getObject({
-    //             Bucket: this.configService.awsS3Config.bucketName,
-    //             Key: key,
-    //         })
-    //         .promise();
-
-    //     console.log(obj);
-    // }
 }
