@@ -36,8 +36,8 @@ export class ProductionGateway
         this._logger.log(`Client disconnected: ${client.id}`);
     }
 
-    @SubscribeMessage('login')
-    handleLogin(client: Socket, payload: any): void {
+    @SubscribeMessage('production')
+    handleProduction(client: Socket, payload: any): void {
         const connectedUser = { ...payload, id: client.id };
         const index = this.connectedUsers.findIndex(
             el => el.task.user.uuid === payload.task.user.uuid,
