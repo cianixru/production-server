@@ -15,8 +15,6 @@ export class ConfigService {
         for (const envName of Object.keys(process.env)) {
             process.env[envName] = process.env[envName].replace(/\\n/g, '\n');
         }
-
-        console.info(process.env);
     }
 
     public get(key: string): string {
@@ -70,8 +68,8 @@ export class ConfigService {
             database: this.get('POSTGRES_DATABASE'),
             synchronize: this.get('NODE_ENV') === 'test',
             dropSchema: this.get('NODE_ENV') === 'test',
-            migrationsRun: true,
-            logging: this.nodeEnv === 'development',
+            migrationsRun: this.get('NODE_ENV') !== 'test',
+            logging: this.get('NODE_ENV') === 'development',
             namingStrategy: new SnakeNamingStrategy(),
         };
     }
