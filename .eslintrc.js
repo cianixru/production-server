@@ -18,7 +18,12 @@ module.exports = {
         'prettier/@typescript-eslint',
         'plugin:prettier/recommended',
     ],
-    plugins: ['@typescript-eslint', '@typescript-eslint/tslint', 'prettier'],
+    plugins: [
+        '@typescript-eslint',
+        '@typescript-eslint/tslint',
+        'prettier',
+        'simple-import-sort',
+    ],
     rules: {
         '@typescript-eslint/no-unused-vars': [
             'error',
@@ -50,6 +55,7 @@ module.exports = {
                 },
             },
         ],
+        'simple-import-sort/sort': 'error',
         '@typescript-eslint/member-ordering': 'off',
         '@typescript-eslint/no-angle-bracket-type-assertion': 'off',
         '@typescript-eslint/no-empty-function': 'error',

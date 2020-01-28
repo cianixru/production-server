@@ -1,8 +1,8 @@
-/* tslint:disable:quotemark object-literal-sort-keys */
 import * as dotenv from 'dotenv';
 import { SnakeNamingStrategy } from './src/snake-naming.strategy';
+import './src/boilerplate.polyfill';
 
-if (!module.hot /* for webpack HMR */) {
+if (!(<any>module).hot /* for webpack HMR */) {
     process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 }
 
@@ -18,7 +18,7 @@ for (const envName of Object.keys(process.env)) {
 module.exports = {
     type: 'postgres',
     host: process.env.POSTGRES_HOST,
-    port: process.env.POSTGRES_PORT,
+    port: +process.env.POSTGRES_PORT,
     username: process.env.POSTGRES_USERNAME,
     password: process.env.POSTGRES_PASSWORD,
     database: process.env.POSTGRES_DATABASE,
