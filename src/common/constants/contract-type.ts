@@ -1,9 +1,9 @@
 'use strict';
 
 export enum ContractType {
-    FullTime = 'Full-time',
-    PartTime = 'Part-time',
-    FixedTerm = 'Fixed-term',
-    Contractor = 'Contractor',
-    Volunteers = 'Volunteers',
+    FULL_TIME = 'Full-time',
+    PART_TIME = 'Part-time',
+    FIXED_TERM = 'Fixed-term',
+    CONTRACTOR = 'Contractor',
+    VOLUNTEERS = 'Volunteers',
 }

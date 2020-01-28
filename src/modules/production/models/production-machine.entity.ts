@@ -1,4 +1,4 @@
-import { Entity, Column, OneToMany } from 'typeorm';
+import { Column, Entity, OneToMany } from 'typeorm';
 
 import { AbstractEntity } from '../../../common/models/abstract.entity';
 import { ProductionMachineDto } from '../dto/production-machine.dto';

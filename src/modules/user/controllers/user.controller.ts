@@ -11,6 +11,7 @@ import {
     ValidationPipe,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
+
 import { RoleType } from '../../../common/constants/role-type';
 import { Roles } from '../../../decorators/roles.decorator';
 import { AuthGuard, RolesGuard } from '../../../guards';
@@ -27,7 +28,7 @@ export class UserController {
     constructor(private _userService: UserService) {}
 
     @Get('/')
-    @Roles(RoleType.Master, RoleType.Admin)
+    @Roles(RoleType.MASTER, RoleType.ADMIN)
     @HttpCode(HttpStatus.OK)
     @ApiResponse({
         status: HttpStatus.OK,

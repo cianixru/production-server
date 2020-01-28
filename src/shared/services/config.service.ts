@@ -1,8 +1,8 @@
-import * as dotenv from 'dotenv';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+import * as dotenv from 'dotenv';
 
-import { IAwsConfig } from '../interfaces/aws-config.interface';
 import { SnakeNamingStrategy } from '../../snake-naming.strategy';
+import { IAwsConfig } from '../interfaces/aws-config.interface';
 
 export class ConfigService {
     constructor() {

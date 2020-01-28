@@ -1,10 +1,11 @@
-import { Entity, Column, ManyToOne, CreateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, ManyToOne } from 'typeorm';
+
 import { AbstractEntity } from '../../../common/models/abstract.entity';
-import { ProductionTaskDto } from '../dto/production-task.dto';
-import { UserEntity } from '../../user/models/user.entity';
 import { CustomerEntity } from '../../customer/models/customer.entity';
-import { ProductionMachineEntity } from './production-machine.entity';
+import { UserEntity } from '../../user/models/user.entity';
+import { ProductionTaskDto } from '../dto/production-task.dto';
 import { ProductionDocumentationEntity } from './production-documentation.entity';
+import { ProductionMachineEntity } from './production-machine.entity';
 
 @Entity({ name: 'production_tasks' })
 export class ProductionTaskEntity extends AbstractEntity<ProductionTaskDto> {

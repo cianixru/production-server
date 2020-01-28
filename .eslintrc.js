@@ -96,12 +96,6 @@ module.exports = {
         'import/no-internal-modules': 'off',
         'import/order': 'off',
         'max-classes-per-file': ['error', 1],
-        'max-len': [
-            'error',
-            {
-                code: 150,
-            },
-        ],
         'new-parens': 'error',
         'no-bitwise': 'error',
         'no-caller': 'error',

@@ -1,8 +1,8 @@
-import { Entity, Column, CreateDateColumn, OneToOne, OneToMany } from 'typeorm';
+import { Column, CreateDateColumn, Entity, OneToMany } from 'typeorm';
 
 import { AbstractEntity } from '../../../common/models/abstract.entity';
-import { CustomerDto } from '../dto/customer.dto';
 import { ProductionTaskEntity } from '../../production/models/production-task.entity';
+import { CustomerDto } from '../dto/customer.dto';
 
 @Entity({ name: 'customers' })
 export class CustomerEntity extends AbstractEntity<CustomerDto> {

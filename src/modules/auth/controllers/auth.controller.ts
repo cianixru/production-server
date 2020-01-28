@@ -1,31 +1,32 @@
 import {
-    Controller,
-    Post,
     Body,
+    Controller,
     HttpCode,
     HttpStatus,
-    UseInterceptors,
-    UseGuards,
     Patch,
+    Post,
+    UseGuards,
+    UseInterceptors,
 } from '@nestjs/common';
 import {
-    ApiOkResponse,
-    ApiTags,
     ApiBearerAuth,
     ApiNoContentResponse,
+    ApiOkResponse,
+    ApiTags,
 } from '@nestjs/swagger';
+
 import { AuthUser } from '../../../decorators/auth-user.decorator';
 import { AuthGuard } from '../../../guards/auth.guard';
 import { AuthUserInterceptor } from '../../../interceptors/auth-user-interceptor.service';
 import { UserAuthEntity } from '../../user/models/user-auth.entity';
 import { UserService } from '../../user/services/user.service';
-import { AuthService } from '../services/auth.service';
 import {
-    RegisterPayloadDto,
-    UserRegisterDto,
-    UserLoginDto,
     LoginPayloadDto,
+    RegisterPayloadDto,
+    UserLoginDto,
+    UserRegisterDto,
 } from '../dto';
+import { AuthService } from '../services/auth.service';
 
 @Controller('auth')
 @ApiTags('Auth')

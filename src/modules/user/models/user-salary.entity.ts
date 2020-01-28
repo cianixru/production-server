@@ -1,13 +1,14 @@
 import {
-    Entity,
     Column,
-    OneToOne,
+    Entity,
     JoinColumn,
+    OneToOne,
     UpdateDateColumn,
 } from 'typeorm';
-import { UserSalaryDto } from '../dto';
+
 import { ContractType } from '../../../common/constants/contract-type';
 import { AbstractEntity } from '../../../common/models/abstract.entity';
+import { UserSalaryDto } from '../dto';
 import { UserEntity } from './user.entity';
 
 @Entity({ name: 'users_salary' })
@@ -18,7 +19,7 @@ export class UserSalaryEntity extends AbstractEntity<UserSalaryDto> {
     @Column({
         type: 'enum',
         enum: ContractType,
-        default: ContractType.FullTime,
+        default: ContractType.FULL_TIME,
         nullable: false,
     })
     public contractType: ContractType;

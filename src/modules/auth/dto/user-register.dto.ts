@@ -1,17 +1,18 @@
 'use strict';
 
-import {
-    IsString,
-    IsEmail,
-    MinLength,
-    IsNotEmpty,
-    IsPhoneNumber,
-    IsOptional,
-    IsEnum,
-} from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { RoleType } from '../../../common/constants/role-type';
+import {
+    IsEmail,
+    IsEnum,
+    IsNotEmpty,
+    IsOptional,
+    IsPhoneNumber,
+    IsString,
+    MinLength,
+} from 'class-validator';
+
 import { ContractType } from '../../../common/constants/contract-type';
+import { RoleType } from '../../../common/constants/role-type';
 
 export class UserRegisterDto {
     @IsString()

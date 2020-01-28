@@ -1,37 +1,38 @@
 'use strict';
 
 import {
+    Body,
     Controller,
     Get,
     HttpCode,
     HttpStatus,
+    Patch,
+    Post,
     Query,
+    UploadedFile,
     UseGuards,
     UseInterceptors,
     ValidationPipe,
-    Post,
-    Body,
-    Patch,
-    UploadedFile,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiTags, ApiOkResponse } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+
 import { RoleType } from '../../../common/constants/role-type';
+import { AuthUser } from '../../../decorators/auth-user.decorator';
 import { Roles } from '../../../decorators/roles.decorator';
+import { ProductionTaskNotFoundException } from '../../../exceptions';
 import { AuthGuard, RolesGuard } from '../../../guards';
 import { AuthUserInterceptor } from '../../../interceptors/auth-user-interceptor.service';
-import { ProductionTaskService } from '../services/production-task.service';
-import { AuthUser } from '../../../decorators/auth-user.decorator';
-import { UserAuthEntity } from '../../user/models/user-auth.entity';
 import { IFile } from '../../../shared/interfaces/file.interface';
+import { UserAuthEntity } from '../../user/models/user-auth.entity';
 import {
     ProductionTaskDto,
-    ProductionTaskUpdateDto,
     ProductionTaskRegisterDto,
-    ProductionTasksPageOptionsDto,
     ProductionTasksPageDto,
+    ProductionTasksPageOptionsDto,
+    ProductionTaskUpdateDto,
 } from '../dto';
-import { ProductionTaskNotFoundException } from '../../../exceptions';
+import { ProductionTaskService } from '../services/production-task.service';
 
 @Controller('production')
 @ApiTags('Production')
@@ -42,7 +43,7 @@ export class ProductionTaskController {
     constructor(private _productionTaskService: ProductionTaskService) {}
 
     @Get('tasks')
-    @Roles(RoleType.Master, RoleType.Admin)
+    @Roles(RoleType.MASTER, RoleType.ADMIN)
     @HttpCode(HttpStatus.OK)
     @ApiOkResponse({
         description: 'Get production tasks list',
@@ -56,7 +57,7 @@ export class ProductionTaskController {
     }
 
     @Post('tasks')
-    @Roles(RoleType.Master, RoleType.Admin)
+    @Roles(RoleType.MASTER, RoleType.ADMIN)
     @HttpCode(HttpStatus.OK)
     @ApiOkResponse({
         description: 'Register production task',
@@ -80,7 +81,7 @@ export class ProductionTaskController {
     }
 
     @Get('task')
-    @Roles(RoleType.Worker)
+    @Roles(RoleType.WORKER)
     @HttpCode(HttpStatus.OK)
     @ApiOkResponse({
         type: ProductionTaskDto,
@@ -102,7 +103,7 @@ export class ProductionTaskController {
     }
 
     @Patch('task')
-    @Roles(RoleType.Worker)
+    @Roles(RoleType.WORKER)
     @HttpCode(HttpStatus.OK)
     @ApiOkResponse({
         type: ProductionTaskDto,

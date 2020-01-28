@@ -1,28 +1,28 @@
 import { Injectable } from '@nestjs/common';
-
 import { UpdateResult } from 'typeorm';
-import { PageMetaDto } from '../../../common/dto/page-meta.dto';
-import { ProductionTaskRepository } from '../repositories/production-task.repository';
-import { ProductionTasksPageOptionsDto } from '../dto/production-tasks-page-options.dto';
-import { ProductionTasksPageDto } from '../dto/production-tasks-page.dto';
-import { UserEntity } from '../../user/models/user.entity';
-import { ProductionTaskRegisterDto } from '../dto/production-task-register.dto';
-import { UserService } from '../../user/services/user.service';
-import { CustomerService } from '../../customer/services/customer.service';
-import { ProductionMachineService } from './production-machine.service';
+
 import { Order } from '../../../common/constants/order';
-import { ProductionTaskEntity } from '../models/production-task.entity';
-import { IFile } from '../../../shared/interfaces/file.interface';
-import { ValidatorService } from '../../../shared/services/validator.service';
-import { AwsS3Service } from '../../../shared/services/aws-s3.service';
+import { PageMetaDto } from '../../../common/dto/page-meta.dto';
 import {
-    UserNotFoundException,
-    FileNotImageException,
     CustomerNotFoundException,
+    FileNotImageException,
     ProductionMachineNotFoundException,
     ProductionTaskNotFoundException,
+    UserNotFoundException,
 } from '../../../exceptions';
+import { IFile } from '../../../shared/interfaces/file.interface';
+import { AwsS3Service } from '../../../shared/services/aws-s3.service';
+import { ValidatorService } from '../../../shared/services/validator.service';
+import { CustomerService } from '../../customer/services/customer.service';
+import { UserEntity } from '../../user/models/user.entity';
+import { UserService } from '../../user/services/user.service';
+import { ProductionTaskRegisterDto } from '../dto/production-task-register.dto';
+import { ProductionTasksPageOptionsDto } from '../dto/production-tasks-page-options.dto';
+import { ProductionTasksPageDto } from '../dto/production-tasks-page.dto';
+import { ProductionTaskEntity } from '../models/production-task.entity';
 import { ProductionDocumentationRepository } from '../repositories/production-documentations.repository';
+import { ProductionTaskRepository } from '../repositories/production-task.repository';
+import { ProductionMachineService } from './production-machine.service';
 
 @Injectable()
 export class ProductionTaskService {

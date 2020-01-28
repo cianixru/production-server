@@ -1,10 +1,10 @@
-import { Entity, Column, CreateDateColumn, OneToOne, OneToMany } from 'typeorm';
+import { Column, CreateDateColumn, Entity, OneToMany, OneToOne } from 'typeorm';
 
 import { AbstractEntity } from '../../../common/models/abstract.entity';
+import { ProductionTaskEntity } from '../../production/models/production-task.entity';
 import { UserDto } from '../dto';
 import { UserAuthEntity } from './user-auth.entity';
 import { UserSalaryEntity } from './user-salary.entity';
-import { ProductionTaskEntity } from '../../production/models/production-task.entity';
 
 @Entity({ name: 'users' })
 export class UserEntity extends AbstractEntity<UserDto> {

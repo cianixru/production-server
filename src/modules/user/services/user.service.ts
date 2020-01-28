@@ -1,15 +1,16 @@
 import { Injectable } from '@nestjs/common';
+import { format } from 'date-fns';
 import { FindConditions, UpdateResult } from 'typeorm';
-import { UserRegisterDto } from '../../auth/dto';
+
 import { PageMetaDto } from '../../../common/dto/page-meta.dto';
+import { UserRegisterDto } from '../../auth/dto';
 import { UsersPageDto, UsersPageOptionsDto } from '../dto';
+import { UserAuthEntity, UserEntity, UserSalaryEntity } from '../models';
 import {
-    UserRepository,
     UserAuthRepository,
+    UserRepository,
     UserSalaryRepository,
 } from '../repositories';
-import { format } from 'date-fns';
-import { UserEntity, UserAuthEntity, UserSalaryEntity } from '../models';
 
 @Injectable()
 export class UserService {

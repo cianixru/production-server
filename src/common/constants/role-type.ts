@@ -1,7 +1,7 @@
 'use strict';
 
 export enum RoleType {
-    Worker = 'WORKER_ROLE',
-    Master = 'MASTER_ROLE',
-    Admin = 'ADMIN_ROLE',
+    WORKER = 'WORKER_ROLE',
+    MASTER = 'MASTER_ROLE',
+    ADMIN = 'ADMIN_ROLE',
 }

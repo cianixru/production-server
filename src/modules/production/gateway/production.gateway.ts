@@ -1,13 +1,13 @@
+import { Logger } from '@nestjs/common';
 import {
-    SubscribeMessage,
-    WebSocketGateway,
-    OnGatewayInit,
-    WebSocketServer,
     OnGatewayConnection,
     OnGatewayDisconnect,
+    OnGatewayInit,
+    SubscribeMessage,
+    WebSocketGateway,
+    WebSocketServer,
 } from '@nestjs/websockets';
-import { Socket, Server } from 'socket.io';
-import { Logger } from '@nestjs/common';
+import { Server, Socket } from 'socket.io';
 
 @WebSocketGateway({ namespace: '/production' })
 export class ProductionGateway
@@ -18,11 +18,11 @@ export class ProductionGateway
     private _logger: Logger = new Logger('ProductionGateway');
     connectedUsers: any[] = [];
 
-    afterInit(server: Server) {
+    afterInit(_server: Server) {
         this._logger.log('ProductionGateway successfully started');
     }
 
-    handleConnection(client: Socket, ...args: any[]) {
+    handleConnection(client: Socket, ..._args: any[]) {
         this._logger.log(`Client connected: ${client.id}`);
     }
 

@@ -1,6 +1,7 @@
 'use strict';
 
 import { ApiProperty } from '@nestjs/swagger';
+
 import { AbstractDto } from '../../../common/dto/abstract.dto';
 import { ProductionDocumentationEntity } from '../models/production-documentation.entity';
 

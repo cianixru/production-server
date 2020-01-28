@@ -1,29 +1,30 @@
 'use strict';
 
 import {
+    Body,
     Controller,
     Get,
     HttpCode,
     HttpStatus,
+    Post,
     Query,
     UseGuards,
     UseInterceptors,
     ValidationPipe,
-    Post,
-    Body,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiTags, ApiOkResponse } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+
 import { RoleType } from '../../../common/constants/role-type';
 import { Roles } from '../../../decorators/roles.decorator';
 import { AuthGuard, RolesGuard } from '../../../guards';
 import { AuthUserInterceptor } from '../../../interceptors/auth-user-interceptor.service';
-import { ProductionMachineService } from '../services/production-machine.service';
 import {
-    ProductionMachineRegisterDto,
     ProductionMachineDto,
+    ProductionMachineRegisterDto,
     ProductionMachinesPageDto,
     ProductionMachinesPageOptionsDto,
 } from '../dto';
+import { ProductionMachineService } from '../services/production-machine.service';
 
 @Controller('production')
 @ApiTags('Production')
@@ -34,7 +35,7 @@ export class ProductionMachineController {
     constructor(private _productionMachineService: ProductionMachineService) {}
 
     @Get('machines')
-    @Roles(RoleType.Master, RoleType.Admin)
+    @Roles(RoleType.MASTER, RoleType.ADMIN)
     @HttpCode(HttpStatus.OK)
     @ApiOkResponse({
         description: 'Get machines list',
@@ -48,7 +49,7 @@ export class ProductionMachineController {
     }
 
     @Post('machines')
-    @Roles(RoleType.Master, RoleType.Admin)
+    @Roles(RoleType.MASTER, RoleType.ADMIN)
     @HttpCode(HttpStatus.OK)
     @ApiOkResponse({
         type: ProductionMachineDto,

@@ -1,20 +1,20 @@
 import {
-    Entity,
     Column,
-    OneToOne,
+    Entity,
     JoinColumn,
+    OneToOne,
     PrimaryGeneratedColumn,
 } from 'typeorm';
 
-import { AbstractEntity } from '../../../common/models/abstract.entity';
 import { RoleType } from '../../../common/constants/role-type';
+import { AbstractEntity } from '../../../common/models/abstract.entity';
 import { UserAuthDto } from '../dto/user-auth.dto';
 import { PasswordTransformer } from '../utils/password.transformer';
 import { UserEntity } from './user.entity';
 
 @Entity({ name: 'users_auth' })
 export class UserAuthEntity extends AbstractEntity<UserAuthDto> {
-    @Column({ type: 'enum', enum: RoleType, default: RoleType.Worker })
+    @Column({ type: 'enum', enum: RoleType, default: RoleType.WORKER })
     role: RoleType;
 
     @PrimaryGeneratedColumn('increment')

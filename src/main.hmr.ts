@@ -1,4 +1,4 @@
-import { ValidationPipe, ClassSerializerInterceptor } from '@nestjs/common';
+import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
 import { NestFactory, Reflector } from '@nestjs/core';
 import { Transport } from '@nestjs/microservices';
 import { NestExpressApplication } from '@nestjs/platform-express';
@@ -9,8 +9,8 @@ import * as morgan from 'morgan';
 
 import { AppModule } from './app.module';
 import { HttpExceptionFilter } from './filters/bad-request.filter';
-import { ConfigService } from './shared/services/config.service';
 import { SharedModule } from './shared/modules/shared.module';
+import { ConfigService } from './shared/services/config.service';
 import { setupSwagger } from './viveo-swagger';
 
 declare const module: any;

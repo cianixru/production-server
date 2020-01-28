@@ -1,42 +1,43 @@
 'use strict';
 
 import {
+    Body,
     Controller,
+    Get,
     HttpCode,
     HttpStatus,
+    Post,
+    Query,
     UseGuards,
     UseInterceptors,
-    Post,
-    Body,
-    Get,
     ValidationPipe,
-    Query,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiTags, ApiOkResponse } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+
 import { RoleType } from '../../../common/constants/role-type';
 import { Roles } from '../../../decorators/roles.decorator';
 import { AuthGuard } from '../../../guards/auth.guard';
 import { RolesGuard } from '../../../guards/roles.guard';
 import { AuthUserInterceptor } from '../../../interceptors/auth-user-interceptor.service';
-import { CustomerService } from '../services/customer.service';
 import {
-    CustomersPageOptionsDto,
-    CustomersPageDto,
-    CustomerRegisterDto,
     CustomerDto,
+    CustomerRegisterDto,
+    CustomersPageDto,
+    CustomersPageOptionsDto,
 } from '../dto';
+import { CustomerService } from '../services/customer.service';
 
 @Controller('customers')
 @ApiTags('Customers')
 @UseGuards(AuthGuard, RolesGuard)
 @UseInterceptors(AuthUserInterceptor)
-@Roles(RoleType.Admin)
+@Roles(RoleType.ADMIN)
 @ApiBearerAuth()
 export class CustomerController {
     constructor(private _customerService: CustomerService) {}
 
     @Post('/')
-    @Roles(RoleType.Master, RoleType.Admin)
+    @Roles(RoleType.MASTER, RoleType.ADMIN)
     @HttpCode(HttpStatus.OK)
     @ApiOkResponse({
         type: CustomerDto,
@@ -53,7 +54,7 @@ export class CustomerController {
     }
 
     @Get('/')
-    @Roles(RoleType.Master, RoleType.Admin)
+    @Roles(RoleType.MASTER, RoleType.ADMIN)
     @HttpCode(HttpStatus.OK)
     @ApiOkResponse({
         description: 'Get customers list',

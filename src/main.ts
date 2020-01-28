@@ -1,9 +1,9 @@
-import { ValidationPipe, ClassSerializerInterceptor } from '@nestjs/common';
+import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
 import { NestFactory, Reflector } from '@nestjs/core';
 import { Transport } from '@nestjs/microservices';
 import {
-    NestExpressApplication,
     ExpressAdapter,
+    NestExpressApplication,
 } from '@nestjs/platform-express';
 import * as compression from 'compression';
 import * as RateLimit from 'express-rate-limit';
@@ -13,11 +13,12 @@ import {
     initializeTransactionalContext,
     patchTypeORMRepositoryWithBaseRepository,
 } from 'typeorm-transactional-cls-hooked';
+
 import { AppModule } from './app.module';
 import { HttpExceptionFilter } from './filters/bad-request.filter';
 import { QueryFailedFilter } from './filters/query-failed.filter';
-import { ConfigService } from './shared/services/config.service';
 import { SharedModule } from './shared/modules/shared.module';
+import { ConfigService } from './shared/services/config.service';
 import { setupSwagger } from './viveo-swagger';
 
 async function bootstrap() {

@@ -1,8 +1,9 @@
 'use strict';
 
 import { ApiProperty } from '@nestjs/swagger';
-import { AbstractDto } from '../../../common/dto/abstract.dto';
+
 import { ContractType } from '../../../common/constants/contract-type';
+import { AbstractDto } from '../../../common/dto/abstract.dto';
 import { UserSalaryEntity } from '../models/user-salary.entity';
 
 export class UserSalaryDto extends AbstractDto {

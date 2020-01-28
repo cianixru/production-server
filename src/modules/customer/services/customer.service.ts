@@ -1,13 +1,14 @@
 import { Injectable } from '@nestjs/common';
-import { PageMetaDto } from '../../../common/dto/page-meta.dto';
 import { FindConditions } from 'typeorm';
-import { CustomerRepository } from '../repositories/customer.repository';
-import { CustomerEntity } from '../models/customer.entity';
+
+import { PageMetaDto } from '../../../common/dto/page-meta.dto';
 import {
+    CustomerRegisterDto,
     CustomersPageDto,
     CustomersPageOptionsDto,
-    CustomerRegisterDto,
 } from '../dto';
+import { CustomerEntity } from '../models/customer.entity';
+import { CustomerRepository } from '../repositories/customer.repository';
 
 @Injectable()
 export class CustomerService {

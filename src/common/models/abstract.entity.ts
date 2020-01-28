@@ -1,6 +1,6 @@
 'use strict';
 
-import { PrimaryGeneratedColumn, Column, Generated } from 'typeorm';
+import { Column, Generated, PrimaryGeneratedColumn } from 'typeorm';
 
 import { UtilsService } from '../../providers/services/utils.service';
 import { AbstractDto } from '../dto/abstract.dto';

@@ -1,15 +1,15 @@
 import './boilerplate.polyfill';
 
-import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { contextMiddleware } from './middlewares';
 import { AuthModule } from './modules/auth/modules/auth.module';
-import { UserModule } from './modules/user/modules/user.module';
 import { CustomerModule } from './modules/customer/modules/customer.module';
-import { ConfigService } from './shared/services/config.service';
-import { SharedModule } from './shared/modules/shared.module';
 import { ProductionModule } from './modules/production/modules/production.module';
+import { UserModule } from './modules/user/modules/user.module';
+import { SharedModule } from './shared/modules/shared.module';
+import { ConfigService } from './shared/services/config.service';
 
 @Module({
     imports: [
